@@ -1,0 +1,4 @@
+﻿job_id,job_title,department,employment_type,location,posted_date,closed_date,headcount
+1,内勤営業,Sales,fulltime,Tokyo,2024-01-01,,2
+2,カスタマーサポート,Support,fulltime,Tokyo,2024-01-15,,1
+3,システムエンジニア,Engineering,fulltime,Tokyo,2024-02-01,,3

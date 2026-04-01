@@ -1,0 +1,18 @@
+# 作業用ファイル（AI痕跡・生成スクリプト等）
+docs/
+.claude/
+
+# README のテキスト・PDF版（md のみ掲載）
+README.txt
+README.pdf
+ec_sales/README.txt
+ec_sales/README.pdf
+hr_recruitment/README.txt
+hr_recruitment/README.pdf
+
+# OS・エディタ系
+.DS_Store
+Thumbs.db
+*.swp
+__pycache__/
+*.pyc

@@ -1,0 +1,5 @@
+﻿customer_id,customer_name,email,gender,signup_date,city,age
+1,田中太郎,taro@example.com,male,2024-01-10,Tokyo,32
+2,鈴木花子,hanako@example.com,female,2024-02-05,Saitama,28
+3,佐藤一郎,ichiro@example.com,male,2024-03-01,Chiba,41
+4,山田次郎,jiro@example.com,male,2024-03-20,Tokyo,35

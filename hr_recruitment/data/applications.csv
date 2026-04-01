@@ -1,0 +1,5 @@
+﻿application_id,candidate_id,job_id,source_id,applied_at,current_status,hired_flag,hired_at,rejected_at
+1,1,1,1,2024-01-06 10:00:00,hired,1,2024-01-25 15:00:00,
+2,2,2,3,2024-01-20 09:30:00,rejected,0,,2024-02-05 10:00:00
+3,3,3,2,2024-02-05 11:00:00,interview,0,,
+4,4,3,1,2024-02-20 14:00:00,applied,0,,

@@ -1,0 +1,5 @@
+﻿candidate_id,full_name,email,phone,gender,age,current_city,current_role,experience_years,created_at
+1,佐藤太郎,sato@example.com,080-0000-0001,male,29,Tokyo,Sales,3.5,2024-01-05 10:00:00
+2,鈴木花子,suzuki@example.com,080-0000-0002,female,26,Saitama,Support,2.0,2024-01-10 11:30:00
+3,高橋一郎,takahashi@example.com,080-0000-0003,male,33,Chiba,Engineer,7.0,2024-02-01 09:15:00
+4,田中次郎,tanaka@example.com,080-0000-0004,male,24,Tokyo,Student,0.5,2024-02-15 14:20:00
