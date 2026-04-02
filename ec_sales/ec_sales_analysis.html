@@ -7809,7 +7809,7 @@ a.anchor-link {
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=29e59bdb">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=de37ecab">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7820,7 +7820,7 @@ a.anchor-link {
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs jp-mod-noInput" id="cell-id=code">
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=1c9e92e5">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=63b1514b">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7831,24 +7831,24 @@ a.anchor-link {
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=f9e9f23d">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=3106f9ca">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="01.-%E6%9C%88%E6%AC%A1%E5%A3%B2%E4%B8%8A%E6%8E%A8%E7%A7%BB%E3%83%BB%E5%89%8D%E6%9C%88%E6%AF%94%E5%88%86%E6%9E%90">01. 月次売上推移・前月比分析<a class="anchor-link" href="#01.-%E6%9C%88%E6%AC%A1%E5%A3%B2%E4%B8%8A%E6%8E%A8%E7%A7%BB%E3%83%BB%E5%89%8D%E6%9C%88%E6%AF%94%E5%88%86%E6%9E%90">¶</a></h3><p><strong>ビジネス課題:</strong> 売上の月次トレンドと前月比を定量化し、異常値の早期検知や施策効果の評価に活用する。</p>
-<p><strong>使用テクニック:</strong> CTE, <code>LAG()</code> ウィンドウ関数, <code>DATE_FORMAT</code>, <code>NULLIF</code></p>
+<p><strong>使用テクニック:</strong> CTE, <code>LAG()</code>, <code>DATE_FORMAT</code>, <code>NULLIF</code></p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=88861637">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=603c3211">
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child">
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>C:\Users\willi\AppData\Local\Temp\ipykernel_30248\2420247800.py:16: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+<pre>C:\Users\willi\AppData\Local\Temp\ipykernel_23940\2420247800.py:16: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
   return pd.read_sql(sql, con)
 </pre>
 </div>
@@ -7882,24 +7882,87 @@ a.anchor-link {
 <tbody>
 <tr>
 <th>0</th>
-<td>2024-04</td>
-<td>7,500.00</td>
+<td>2024-01</td>
+<td>44,200.00</td>
 <td>NaN</td>
 <td>NaN</td>
 </tr>
 <tr>
 <th>1</th>
-<td>2024-05</td>
-<td>4,500.00</td>
-<td>7,500.00</td>
-<td>-40.00</td>
+<td>2024-02</td>
+<td>40,360.00</td>
+<td>44,200.00</td>
+<td>-8.70</td>
 </tr>
 <tr>
 <th>2</th>
+<td>2024-03</td>
+<td>32,200.00</td>
+<td>40,360.00</td>
+<td>-20.20</td>
+</tr>
+<tr>
+<th>3</th>
+<td>2024-04</td>
+<td>31,800.00</td>
+<td>32,200.00</td>
+<td>-1.20</td>
+</tr>
+<tr>
+<th>4</th>
+<td>2024-05</td>
+<td>34,400.00</td>
+<td>31,800.00</td>
+<td>8.20</td>
+</tr>
+<tr>
+<th>5</th>
 <td>2024-06</td>
-<td>1,200.00</td>
-<td>4,500.00</td>
-<td>-73.30</td>
+<td>65,260.00</td>
+<td>34,400.00</td>
+<td>89.70</td>
+</tr>
+<tr>
+<th>6</th>
+<td>2024-07</td>
+<td>61,400.00</td>
+<td>65,260.00</td>
+<td>-5.90</td>
+</tr>
+<tr>
+<th>7</th>
+<td>2024-08</td>
+<td>30,060.00</td>
+<td>61,400.00</td>
+<td>-51.00</td>
+</tr>
+<tr>
+<th>8</th>
+<td>2024-09</td>
+<td>21,500.00</td>
+<td>30,060.00</td>
+<td>-28.50</td>
+</tr>
+<tr>
+<th>9</th>
+<td>2024-10</td>
+<td>70,580.00</td>
+<td>21,500.00</td>
+<td>228.30</td>
+</tr>
+<tr>
+<th>10</th>
+<td>2024-11</td>
+<td>26,700.00</td>
+<td>70,580.00</td>
+<td>-62.20</td>
+</tr>
+<tr>
+<th>11</th>
+<td>2024-12</td>
+<td>61,800.00</td>
+<td>26,700.00</td>
+<td>131.50</td>
 </tr>
 </tbody>
 </table>
@@ -7909,7 +7972,7 @@ a.anchor-link {
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=aefd45da">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=c4c22df3">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7919,14 +7982,14 @@ a.anchor-link {
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=c9dd81e7">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=ac55e69e">
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child">
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>C:\Users\willi\AppData\Local\Temp\ipykernel_30248\2420247800.py:16: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+<pre>C:\Users\willi\AppData\Local\Temp\ipykernel_23940\2420247800.py:16: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
   return pd.read_sql(sql, con)
 </pre>
 </div>
@@ -7958,18 +8021,28 @@ a.anchor-link {
 <tbody>
 <tr>
 <th>0</th>
-<td>Electronics</td>
-<td>7,300.00</td>
+<td>Home &amp; Kitchen</td>
+<td>175,460.00</td>
 </tr>
 <tr>
 <th>1</th>
 <td>Clothing</td>
-<td>4,500.00</td>
+<td>136,800.00</td>
 </tr>
 <tr>
 <th>2</th>
+<td>Electronics</td>
+<td>106,400.00</td>
+</tr>
+<tr>
+<th>3</th>
+<td>Books</td>
+<td>77,400.00</td>
+</tr>
+<tr>
+<th>4</th>
 <td>Food</td>
-<td>1,400.00</td>
+<td>24,200.00</td>
 </tr>
 </tbody>
 </table>
@@ -7979,24 +8052,24 @@ a.anchor-link {
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=5d121477">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=66d908d8">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="03.-%E9%A1%A7%E5%AE%A2LTV%EF%BC%88%E7%94%9F%E6%B6%AF%E4%BE%A1%E5%80%A4%EF%BC%89%E5%88%86%E6%9E%90">03. 顧客LTV（生涯価値）分析<a class="anchor-link" href="#03.-%E9%A1%A7%E5%AE%A2LTV%EF%BC%88%E7%94%9F%E6%B6%AF%E4%BE%A1%E5%80%A4%EF%BC%89%E5%88%86%E6%9E%90">¶</a></h3><p><strong>ビジネス課題:</strong> 顧客ごとの累計売上・注文回数・平均注文額を算出し、VIP顧客の識別やCRM施策の優先度判定に活用する。</p>
-<p><strong>使用テクニック:</strong> CTE（注文単位の小計を先に集計）, JOIN, 集計関数</p>
+<h3 id="03.-%E9%A1%A7%E5%AE%A2LTV%EF%BC%88%E7%94%9F%E6%B6%AF%E4%BE%A1%E5%80%A4%EF%BC%89%E5%88%86%E6%9E%90">03. 顧客LTV（生涯価値）分析<a class="anchor-link" href="#03.-%E9%A1%A7%E5%AE%A2LTV%EF%BC%88%E7%94%9F%E6%B6%AF%E4%BE%A1%E5%80%A4%EF%BC%89%E5%88%86%E6%9E%90">¶</a></h3><p><strong>ビジネス課題:</strong> 顧客ごとの累計売上・注文回数・平均注文額を算出し、VIP顧客の識別に活用する。</p>
+<p><strong>使用テクニック:</strong> CTE, JOIN, 集計関数</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=3dcb978f">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=c467e8e9">
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child">
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>C:\Users\willi\AppData\Local\Temp\ipykernel_30248\2420247800.py:16: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+<pre>C:\Users\willi\AppData\Local\Temp\ipykernel_23940\2420247800.py:16: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
   return pd.read_sql(sql, con)
 </pre>
 </div>
@@ -8031,27 +8104,211 @@ a.anchor-link {
 <tbody>
 <tr>
 <th>0</th>
-<td>1</td>
-<td>田中太郎</td>
-<td>2</td>
-<td>5,000.00</td>
-<td>2,500.00</td>
+<td>29</td>
+<td>小林誠</td>
+<td>6</td>
+<td>59,900.00</td>
+<td>9,983.33</td>
 </tr>
 <tr>
 <th>1</th>
+<td>1</td>
+<td>田中太郎</td>
 <td>3</td>
-<td>佐藤一郎</td>
+<td>57,500.00</td>
+<td>19,166.67</td>
+</tr>
+<tr>
+<th>2</th>
+<td>5</td>
+<td>高橋翔太</td>
+<td>5</td>
+<td>50,100.00</td>
+<td>10,020.00</td>
+</tr>
+<tr>
+<th>3</th>
+<td>13</td>
+<td>松本健二</td>
+<td>4</td>
+<td>43,400.00</td>
+<td>10,850.00</td>
+</tr>
+<tr>
+<th>4</th>
+<td>4</td>
+<td>山田大輔</td>
+<td>3</td>
+<td>42,500.00</td>
+<td>14,166.67</td>
+</tr>
+<tr>
+<th>5</th>
+<td>17</td>
+<td>清水拓也</td>
+<td>3</td>
+<td>23,800.00</td>
+<td>7,933.33</td>
+</tr>
+<tr>
+<th>6</th>
+<td>27</td>
+<td>伊藤遥</td>
+<td>4</td>
+<td>22,100.00</td>
+<td>5,525.00</td>
+</tr>
+<tr>
+<th>7</th>
+<td>25</td>
+<td>高橋翔太</td>
+<td>2</td>
+<td>22,000.00</td>
+<td>11,000.00</td>
+</tr>
+<tr>
+<th>8</th>
+<td>8</td>
+<td>中村和也</td>
+<td>3</td>
+<td>21,960.00</td>
+<td>7,320.00</td>
+</tr>
+<tr>
+<th>9</th>
+<td>20</td>
+<td>前田浩</td>
+<td>4</td>
+<td>21,560.00</td>
+<td>5,390.00</td>
+</tr>
+<tr>
+<th>10</th>
+<td>6</td>
+<td>渡辺由美</td>
+<td>3</td>
+<td>20,500.00</td>
+<td>6,833.33</td>
+</tr>
+<tr>
+<th>11</th>
+<td>24</td>
+<td>山田舞</td>
+<td>3</td>
+<td>19,900.00</td>
+<td>6,633.33</td>
+</tr>
+<tr>
+<th>12</th>
+<td>3</td>
+<td>佐藤美咲</td>
+<td>2</td>
+<td>16,460.00</td>
+<td>8,230.00</td>
+</tr>
+<tr>
+<th>13</th>
+<td>2</td>
+<td>鈴木一郎</td>
+<td>3</td>
+<td>15,600.00</td>
+<td>5,200.00</td>
+</tr>
+<tr>
+<th>14</th>
+<td>21</td>
+<td>田中彩</td>
+<td>3</td>
+<td>14,000.00</td>
+<td>4,666.67</td>
+</tr>
+<tr>
+<th>15</th>
+<td>19</td>
+<td>石川誠</td>
+<td>1</td>
+<td>11,400.00</td>
+<td>11,400.00</td>
+</tr>
+<tr>
+<th>16</th>
+<td>7</td>
+<td>伊藤拓也</td>
+<td>3</td>
+<td>10,880.00</td>
+<td>3,626.67</td>
+</tr>
+<tr>
+<th>17</th>
+<td>26</td>
+<td>渡辺直樹</td>
+<td>2</td>
+<td>9,600.00</td>
+<td>4,800.00</td>
+</tr>
+<tr>
+<th>18</th>
+<td>16</td>
+<td>林直樹</td>
+<td>2</td>
+<td>6,600.00</td>
+<td>3,300.00</td>
+</tr>
+<tr>
+<th>19</th>
+<td>30</td>
+<td>加藤花子</td>
+<td>2</td>
+<td>6,000.00</td>
+<td>3,000.00</td>
+</tr>
+<tr>
+<th>20</th>
+<td>28</td>
+<td>中村和也</td>
+<td>2</td>
+<td>5,500.00</td>
+<td>2,750.00</td>
+</tr>
+<tr>
+<th>21</th>
+<td>12</td>
+<td>山本真由</td>
 <td>1</td>
 <td>4,500.00</td>
 <td>4,500.00</td>
 </tr>
 <tr>
-<th>2</th>
-<td>2</td>
-<td>鈴木花子</td>
-<td>2</td>
-<td>3,700.00</td>
-<td>1,850.00</td>
+<th>22</th>
+<td>15</td>
+<td>木村恵</td>
+<td>1</td>
+<td>4,400.00</td>
+<td>4,400.00</td>
+</tr>
+<tr>
+<th>23</th>
+<td>23</td>
+<td>佐藤健二</td>
+<td>1</td>
+<td>4,400.00</td>
+<td>4,400.00</td>
+</tr>
+<tr>
+<th>24</th>
+<td>18</td>
+<td>山口愛</td>
+<td>1</td>
+<td>3,000.00</td>
+<td>3,000.00</td>
+</tr>
+<tr>
+<th>25</th>
+<td>10</td>
+<td>加藤浩</td>
+<td>1</td>
+<td>2,700.00</td>
+<td>2,700.00</td>
 </tr>
 </tbody>
 </table>
@@ -8061,24 +8318,24 @@ a.anchor-link {
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a0a7b77d">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=e4536c68">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="04.-%E6%96%B0%E8%A6%8F%E9%A1%A7%E5%AE%A2-vs-%E6%97%A2%E5%AD%98%E9%A1%A7%E5%AE%A2%E3%81%AE%E6%9C%88%E6%AC%A1%E5%A3%B2%E4%B8%8A%E6%AF%94%E8%BC%83">04. 新規顧客 vs 既存顧客の月次売上比較<a class="anchor-link" href="#04.-%E6%96%B0%E8%A6%8F%E9%A1%A7%E5%AE%A2-vs-%E6%97%A2%E5%AD%98%E9%A1%A7%E5%AE%A2%E3%81%AE%E6%9C%88%E6%AC%A1%E5%A3%B2%E4%B8%8A%E6%AF%94%E8%BC%83">¶</a></h3><p><strong>ビジネス課題:</strong> 月ごとの売上が新規獲得とリピートのどちらに依存しているかを把握し、マーケティング予算の配分判断に用いる。</p>
-<p><strong>使用テクニック:</strong> CTE（初回注文日を特定）, <code>CASE</code> 式による分類</p>
+<h3 id="04.-%E6%96%B0%E8%A6%8F%E9%A1%A7%E5%AE%A2-vs-%E6%97%A2%E5%AD%98%E9%A1%A7%E5%AE%A2%E3%81%AE%E6%9C%88%E6%AC%A1%E5%A3%B2%E4%B8%8A%E6%AF%94%E8%BC%83">04. 新規顧客 vs 既存顧客の月次売上比較<a class="anchor-link" href="#04.-%E6%96%B0%E8%A6%8F%E9%A1%A7%E5%AE%A2-vs-%E6%97%A2%E5%AD%98%E9%A1%A7%E5%AE%A2%E3%81%AE%E6%9C%88%E6%AC%A1%E5%A3%B2%E4%B8%8A%E6%AF%94%E8%BC%83">¶</a></h3><p><strong>ビジネス課題:</strong> 月ごとの売上が新規獲得とリピートのどちらに依存しているかを把握する。</p>
+<p><strong>使用テクニック:</strong> CTE, <code>CASE</code>式, ウィンドウ関数</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=a14dc75b">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=4a085bde">
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child">
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>C:\Users\willi\AppData\Local\Temp\ipykernel_30248\2420247800.py:16: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+<pre>C:\Users\willi\AppData\Local\Temp\ipykernel_23940\2420247800.py:16: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
   return pd.read_sql(sql, con)
 </pre>
 </div>
@@ -8111,27 +8368,141 @@ a.anchor-link {
 <tbody>
 <tr>
 <th>0</th>
-<td>2024-04</td>
-<td>existing</td>
-<td>3,200.00</td>
+<td>2024-01</td>
+<td>new</td>
+<td>44,200.00</td>
 </tr>
 <tr>
 <th>1</th>
-<td>2024-04</td>
-<td>new</td>
-<td>4,300.00</td>
+<td>2024-02</td>
+<td>existing</td>
+<td>16,400.00</td>
 </tr>
 <tr>
 <th>2</th>
-<td>2024-05</td>
+<td>2024-02</td>
 <td>new</td>
-<td>4,500.00</td>
+<td>23,960.00</td>
 </tr>
 <tr>
 <th>3</th>
+<td>2024-03</td>
+<td>existing</td>
+<td>11,400.00</td>
+</tr>
+<tr>
+<th>4</th>
+<td>2024-03</td>
+<td>new</td>
+<td>20,800.00</td>
+</tr>
+<tr>
+<th>5</th>
+<td>2024-04</td>
+<td>existing</td>
+<td>15,200.00</td>
+</tr>
+<tr>
+<th>6</th>
+<td>2024-04</td>
+<td>new</td>
+<td>16,600.00</td>
+</tr>
+<tr>
+<th>7</th>
+<td>2024-05</td>
+<td>existing</td>
+<td>15,800.00</td>
+</tr>
+<tr>
+<th>8</th>
+<td>2024-05</td>
+<td>new</td>
+<td>18,600.00</td>
+</tr>
+<tr>
+<th>9</th>
 <td>2024-06</td>
 <td>existing</td>
-<td>1,200.00</td>
+<td>53,560.00</td>
+</tr>
+<tr>
+<th>10</th>
+<td>2024-06</td>
+<td>new</td>
+<td>11,700.00</td>
+</tr>
+<tr>
+<th>11</th>
+<td>2024-07</td>
+<td>existing</td>
+<td>30,600.00</td>
+</tr>
+<tr>
+<th>12</th>
+<td>2024-07</td>
+<td>new</td>
+<td>30,800.00</td>
+</tr>
+<tr>
+<th>13</th>
+<td>2024-08</td>
+<td>existing</td>
+<td>26,260.00</td>
+</tr>
+<tr>
+<th>14</th>
+<td>2024-08</td>
+<td>new</td>
+<td>3,800.00</td>
+</tr>
+<tr>
+<th>15</th>
+<td>2024-09</td>
+<td>existing</td>
+<td>17,100.00</td>
+</tr>
+<tr>
+<th>16</th>
+<td>2024-09</td>
+<td>new</td>
+<td>4,400.00</td>
+</tr>
+<tr>
+<th>17</th>
+<td>2024-10</td>
+<td>existing</td>
+<td>57,080.00</td>
+</tr>
+<tr>
+<th>18</th>
+<td>2024-10</td>
+<td>new</td>
+<td>13,500.00</td>
+</tr>
+<tr>
+<th>19</th>
+<td>2024-11</td>
+<td>existing</td>
+<td>22,300.00</td>
+</tr>
+<tr>
+<th>20</th>
+<td>2024-11</td>
+<td>new</td>
+<td>4,400.00</td>
+</tr>
+<tr>
+<th>21</th>
+<td>2024-12</td>
+<td>existing</td>
+<td>55,400.00</td>
+</tr>
+<tr>
+<th>22</th>
+<td>2024-12</td>
+<td>new</td>
+<td>6,400.00</td>
 </tr>
 </tbody>
 </table>
@@ -8141,24 +8512,24 @@ a.anchor-link {
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=e1cd1dde">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=3f6170ad">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="05.-%E5%A3%B2%E4%B8%8A%E3%83%88%E3%83%83%E3%83%9710%25%E9%A1%A7%E5%AE%A2%E3%81%AE%E9%9B%86%E4%B8%AD%E5%BA%A6%E5%88%86%E6%9E%90%EF%BC%88%E3%83%91%E3%83%AC%E3%83%BC%E3%83%88%E5%88%86%E6%9E%90%EF%BC%89">05. 売上トップ10%顧客の集中度分析（パレート分析）<a class="anchor-link" href="#05.-%E5%A3%B2%E4%B8%8A%E3%83%88%E3%83%83%E3%83%9710%25%E9%A1%A7%E5%AE%A2%E3%81%AE%E9%9B%86%E4%B8%AD%E5%BA%A6%E5%88%86%E6%9E%90%EF%BC%88%E3%83%91%E3%83%AC%E3%83%BC%E3%83%88%E5%88%86%E6%9E%90%EF%BC%89">¶</a></h3><p><strong>ビジネス課題:</strong> 売上上位顧客への依存度を定量化し、顧客基盤のリスク評価や優良顧客向け施策の費用対効果を検討する。</p>
-<p><strong>使用テクニック:</strong> CTE（3段階）, <code>NTILE()</code> ウィンドウ関数によるデシル分割, 条件付き集計</p>
+<h3 id="05.-%E5%A3%B2%E4%B8%8A%E3%83%88%E3%83%83%E3%83%9710%25%E9%A1%A7%E5%AE%A2%E3%81%AE%E9%9B%86%E4%B8%AD%E5%BA%A6%E5%88%86%E6%9E%90">05. 売上トップ10%顧客の集中度分析<a class="anchor-link" href="#05.-%E5%A3%B2%E4%B8%8A%E3%83%88%E3%83%83%E3%83%9710%25%E9%A1%A7%E5%AE%A2%E3%81%AE%E9%9B%86%E4%B8%AD%E5%BA%A6%E5%88%86%E6%9E%90">¶</a></h3><p><strong>ビジネス課題:</strong> 売上上位顧客への依存度を定量化し、顧客基盤のリスク評価に活用する。</p>
+<p><strong>使用テクニック:</strong> CTE(3段), <code>NTILE()</code></p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=190b712b">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=53ff6d8c">
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child">
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>C:\Users\willi\AppData\Local\Temp\ipykernel_30248\2420247800.py:16: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+<pre>C:\Users\willi\AppData\Local\Temp\ipykernel_23940\2420247800.py:16: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
   return pd.read_sql(sql, con)
 </pre>
 </div>
@@ -8191,9 +8562,9 @@ a.anchor-link {
 <tbody>
 <tr>
 <th>0</th>
-<td>13,200.00</td>
-<td>5,000.00</td>
-<td>37.90</td>
+<td>520,260.00</td>
+<td>167,500.00</td>
+<td>32.20</td>
 </tr>
 </tbody>
 </table>
@@ -8203,7 +8574,7 @@ a.anchor-link {
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d32f944d">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9eeddc25">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8212,7 +8583,7 @@ a.anchor-link {
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=e41e2f85">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=e6f29a3b">
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>

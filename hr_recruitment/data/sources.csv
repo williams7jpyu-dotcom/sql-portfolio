@@ -1,4 +1,6 @@
-﻿source_id,source_name,source_type
+source_id,source_name,source_type
 1,JobBoard A,job_board
 2,Referral,referral
 3,Company Website,direct
+4,Agency X,agency
+5,LinkedIn,job_board

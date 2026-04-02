@@ -1,5 +1,21 @@
-﻿candidate_id,full_name,email,phone,gender,age,current_city,current_role,experience_years,created_at
-1,佐藤太郎,sato@example.com,080-0000-0001,male,29,Tokyo,Sales,3.5,2024-01-05 10:00:00
-2,鈴木花子,suzuki@example.com,080-0000-0002,female,26,Saitama,Support,2.0,2024-01-10 11:30:00
-3,高橋一郎,takahashi@example.com,080-0000-0003,male,33,Chiba,Engineer,7.0,2024-02-01 09:15:00
-4,田中次郎,tanaka@example.com,080-0000-0004,male,24,Tokyo,Student,0.5,2024-02-15 14:20:00
+candidate_id,full_name,email,phone,gender,age,current_city,current_role,experience_years,created_at
+1,佐藤太郎,candidate01@example.com,080-0000-0001,male,34,Fukuoka,Sales,2.8,2024-03-08 11:08:00
+2,鈴木一郎,candidate02@example.com,080-0000-0002,male,24,Chiba,Support,8.9,2024-02-20 15:12:00
+3,高橋美咲,candidate03@example.com,080-0000-0003,female,35,Saitama,Engineer,9.6,2024-06-27 14:55:00
+4,田中大輔,candidate04@example.com,080-0000-0004,male,28,Osaka,Student,5.8,2024-03-28 17:21:00
+5,渡辺翔太,candidate05@example.com,080-0000-0005,male,24,Yokohama,Designer,5.9,2024-07-02 12:35:00
+6,伊藤由美,candidate06@example.com,080-0000-0006,female,22,Fukuoka,Analyst,2.8,2024-02-15 16:57:00
+7,山本拓也,candidate07@example.com,080-0000-0007,male,28,Kobe,PM,11.7,2024-06-05 11:58:00
+8,中村和也,candidate08@example.com,080-0000-0008,male,27,Kobe,Marketing,7.3,2024-03-17 18:11:00
+9,小林陽子,candidate09@example.com,080-0000-0009,female,23,Yokohama,Accounting,0.8,2024-08-22 14:05:00
+10,加藤浩,candidate10@example.com,080-0000-0010,male,35,Yokohama,QA,2.1,2024-01-13 13:08:00
+11,吉田太郎,candidate11@example.com,080-0000-0011,male,38,Fukuoka,Sales,2.8,2024-01-21 11:28:00
+12,松本真由,candidate12@example.com,080-0000-0012,female,30,Fukuoka,Support,10.0,2024-03-12 15:59:00
+13,井上健二,candidate13@example.com,080-0000-0013,male,23,Osaka,Engineer,9.0,2024-03-20 14:07:00
+14,木村大輔,candidate14@example.com,080-0000-0014,male,25,Yokohama,Student,2.2,2024-03-06 14:09:00
+15,林恵,candidate15@example.com,080-0000-0015,female,28,Nagoya,Designer,9.4,2024-04-28 12:07:00
+16,清水直樹,candidate16@example.com,080-0000-0016,male,33,Osaka,Analyst,8.3,2024-05-01 17:53:00
+17,山口拓也,candidate17@example.com,080-0000-0017,male,23,Nagoya,PM,3.0,2024-07-11 14:24:00
+18,石川愛,candidate18@example.com,080-0000-0018,female,35,Nagoya,Marketing,6.6,2024-03-02 13:46:00
+19,前田誠,candidate19@example.com,080-0000-0019,male,34,Kobe,Accounting,3.1,2024-04-21 12:06:00
+20,藤田浩,candidate20@example.com,080-0000-0020,male,32,Saitama,QA,9.3,2024-04-13 12:28:00

@@ -7802,7 +7802,7 @@ a.anchor-link {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="%E6%8E%A1%E7%94%A8%E7%AE%A1%E7%90%86%E3%83%BB%E3%83%95%E3%82%A1%E3%83%8D%E3%83%AB%E5%88%86%E6%9E%90">採用管理・ファネル分析<a class="anchor-link" href="#%E6%8E%A1%E7%94%A8%E7%AE%A1%E7%90%86%E3%83%BB%E3%83%95%E3%82%A1%E3%83%8D%E3%83%AB%E5%88%86%E6%9E%90">¶</a></h1><p>架空の採用管理データを使い、採用ファネル可視化・転換率・リードタイム・媒体効果・パイプライン状況を分析します。</p>
+<h1 id="%E6%8E%A1%E7%94%A8%E7%AE%A1%E7%90%86%E3%83%BB%E3%83%95%E3%82%A1%E3%83%8D%E3%83%AB%E5%88%86%E6%9E%90">採用管理・ファネル分析<a class="anchor-link" href="#%E6%8E%A1%E7%94%A8%E7%AE%A1%E7%90%86%E3%83%BB%E3%83%95%E3%82%A1%E3%83%8D%E3%83%AB%E5%88%86%E6%9E%90">¶</a></h1><p>架空の採用管理データを使い、採用ファネル・転換率・リードタイム・媒体効果・パイプライン状況を分析します。</p>
 <hr/>
 <p><strong>実行環境:</strong> MySQL 8.0 / Python 3 / pandas<br/>
 <strong>DB:</strong> <code>sql_portfolio</code>（<code>SETUP.md</code> の手順で事前に構築）</p>
@@ -7810,7 +7810,7 @@ a.anchor-link {
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d3ce904c">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fce4636f">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7850,7 +7850,7 @@ a.anchor-link {
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=05cf3c68">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=531056d9">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7862,18 +7862,18 @@ a.anchor-link {
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=2ec6a5fd">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=6241e6f2">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="01.-%E6%B1%82%E4%BA%BA%E5%88%A5%E3%83%95%E3%82%A1%E3%83%8D%E3%83%AB%E4%BB%B6%E6%95%B0">01. 求人別ファネル件数<a class="anchor-link" href="#01.-%E6%B1%82%E4%BA%BA%E5%88%A5%E3%83%95%E3%82%A1%E3%83%8D%E3%83%AB%E4%BB%B6%E6%95%B0">¶</a></h3><p><strong>ビジネス課題:</strong> 求人ごとに応募〜面接〜内定〜採用の到達人数を一覧化し、選考の進捗状況を俯瞰する。</p>
-<p><strong>使用テクニック:</strong> <code>COUNT(DISTINCT CASE WHEN ...)</code> による条件付き集計, <code>LEFT JOIN</code></p>
+<h3 id="01.-%E6%B1%82%E4%BA%BA%E5%88%A5%E3%83%95%E3%82%A1%E3%83%8D%E3%83%AB%E4%BB%B6%E6%95%B0">01. 求人別ファネル件数<a class="anchor-link" href="#01.-%E6%B1%82%E4%BA%BA%E5%88%A5%E3%83%95%E3%82%A1%E3%83%8D%E3%83%AB%E4%BB%B6%E6%95%B0">¶</a></h3><p><strong>ビジネス課題:</strong> 求人ごとの応募〜採用の到達人数を一覧化し、選考進捗を俯瞰する。</p>
+<p><strong>使用テクニック:</strong> <code>COUNT(DISTINCT CASE WHEN ...)</code>, <code>LEFT JOIN</code></p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=2d97b447">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=1369504f">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7882,6 +7882,7 @@ a.anchor-link {
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">sql</span> <span class="o">=</span> <span class="s1">'''</span>
+<span class="s1">-- LEFT JOIN で全応募を保持しつつ、CASE式で各ステージの到達者を個別カウント</span>
 <span class="s1">SELECT</span>
 <span class="s1">    j.job_id,</span>
 <span class="s1">    j.job_title,</span>
@@ -7890,10 +7891,12 @@ a.anchor-link {
 <span class="s1">    COUNT(DISTINCT CASE WHEN s.stage_name = 'offer'     THEN s.application_id END) AS offer_count,</span>
 <span class="s1">    COUNT(DISTINCT CASE WHEN s.stage_name = 'hired'     THEN s.application_id END) AS hired_count</span>
 <span class="s1">FROM jobs j</span>
-<span class="s1">JOIN applications a ON j.job_id = a.job_id</span>
-<span class="s1">LEFT JOIN application_stages s ON a.application_id = s.application_id</span>
+<span class="s1">JOIN applications a</span>
+<span class="s1">  ON j.job_id = a.job_id</span>
+<span class="s1">LEFT JOIN application_stages s</span>
+<span class="s1">  ON a.application_id = s.application_id</span>
 <span class="s1">GROUP BY j.job_id, j.job_title</span>
-<span class="s1">ORDER BY applied_count DESC</span>
+<span class="s1">ORDER BY applied_count DESC;</span>
 <span class="s1">'''</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">run</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
 <span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
@@ -7909,7 +7912,7 @@ a.anchor-link {
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>C:\Users\willi\AppData\Local\Temp\ipykernel_29712\2420247800.py:16: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+<pre>C:\Users\willi\AppData\Local\Temp\ipykernel_4092\2420247800.py:16: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
   return pd.read_sql(sql, con)
 </pre>
 </div>
@@ -7946,28 +7949,55 @@ a.anchor-link {
 <tbody>
 <tr>
 <th>0</th>
-<td>3</td>
-<td>システムエンジニア</td>
+<td>6</td>
+<td>マーケティング</td>
+<td>9</td>
 <td>2</td>
 <td>1</td>
-<td>0</td>
 <td>0</td>
 </tr>
 <tr>
 <th>1</th>
-<td>1</td>
-<td>内勤営業</td>
-<td>1</td>
-<td>1</td>
+<td>2</td>
+<td>カスタマーサポート</td>
+<td>4</td>
+<td>2</td>
 <td>1</td>
 <td>1</td>
 </tr>
 <tr>
 <th>2</th>
+<td>4</td>
+<td>データアナリスト</td>
+<td>4</td>
 <td>2</td>
-<td>カスタマーサポート</td>
 <td>1</td>
 <td>0</td>
+</tr>
+<tr>
+<th>3</th>
+<td>1</td>
+<td>内勤営業</td>
+<td>3</td>
+<td>2</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<th>4</th>
+<td>5</td>
+<td>人事アシスタント</td>
+<td>3</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<th>5</th>
+<td>3</td>
+<td>システムエンジニア</td>
+<td>2</td>
+<td>2</td>
 <td>0</td>
 <td>0</td>
 </tr>
@@ -7979,18 +8009,18 @@ a.anchor-link {
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=bfbae29b">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a91dd1f8">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="02.-%E3%83%95%E3%82%A1%E3%83%8D%E3%83%AB%E3%82%B3%E3%83%B3%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E7%8E%87">02. ファネルコンバージョン率<a class="anchor-link" href="#02.-%E3%83%95%E3%82%A1%E3%83%8D%E3%83%AB%E3%82%B3%E3%83%B3%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E7%8E%87">¶</a></h3><p><strong>ビジネス課題:</strong> 各選考ステージ間の通過率を算出し、歩留まりが悪いステージ（ボトルネック）を特定する。</p>
-<p><strong>使用テクニック:</strong> CTE, <code>NULLIF</code> によるゼロ除算防止, 比率計算</p>
+<h3 id="02.-%E3%83%95%E3%82%A1%E3%83%8D%E3%83%AB%E3%82%B3%E3%83%B3%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E7%8E%87">02. ファネルコンバージョン率<a class="anchor-link" href="#02.-%E3%83%95%E3%82%A1%E3%83%8D%E3%83%AB%E3%82%B3%E3%83%B3%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E7%8E%87">¶</a></h3><p><strong>ビジネス課題:</strong> 各ステージ間の通過率を算出し、ボトルネックを特定する。</p>
+<p><strong>使用テクニック:</strong> CTE, <code>NULLIF</code>, 比率計算</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=7a44d6ac">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=68506e06">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7999,6 +8029,7 @@ a.anchor-link {
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">sql</span> <span class="o">=</span> <span class="s1">'''</span>
+<span class="s1">-- Step 1: 求人ごとの各ステージ到達者数を集計</span>
 <span class="s1">WITH funnel AS (</span>
 <span class="s1">    SELECT</span>
 <span class="s1">        j.job_id,</span>
@@ -8012,15 +8043,20 @@ a.anchor-link {
 <span class="s1">    LEFT JOIN application_stages s ON a.application_id = s.application_id</span>
 <span class="s1">    GROUP BY j.job_id, j.job_title</span>
 <span class="s1">)</span>
+<span class="s1">-- Step 2: ステージ間の転換率を算出（NULLIF でゼロ除算を防止）</span>
 <span class="s1">SELECT</span>
-<span class="s1">    job_id, job_title,</span>
-<span class="s1">    applied_count, interview_count, offer_count, hired_count,</span>
-<span class="s1">    ROUND(interview_count / NULLIF(applied_count,   0) * 100, 1) AS app_to_interview_pct,</span>
+<span class="s1">    job_id,</span>
+<span class="s1">    job_title,</span>
+<span class="s1">    applied_count,</span>
+<span class="s1">    interview_count,</span>
+<span class="s1">    offer_count,</span>
+<span class="s1">    hired_count,</span>
+<span class="s1">    ROUND(interview_count / NULLIF(applied_count, 0) * 100, 1) AS app_to_interview_pct,</span>
 <span class="s1">    ROUND(offer_count     / NULLIF(interview_count, 0) * 100, 1) AS interview_to_offer_pct,</span>
-<span class="s1">    ROUND(hired_count     / NULLIF(offer_count,     0) * 100, 1) AS offer_to_hire_pct,</span>
-<span class="s1">    ROUND(hired_count     / NULLIF(applied_count,   0) * 100, 2) AS app_to_hire_pct</span>
+<span class="s1">    ROUND(hired_count     / NULLIF(offer_count, 0) * 100, 1) AS offer_to_hire_pct,</span>
+<span class="s1">    ROUND(hired_count     / NULLIF(applied_count, 0) * 100, 2) AS app_to_hire_pct</span>
 <span class="s1">FROM funnel</span>
-<span class="s1">ORDER BY app_to_hire_pct DESC</span>
+<span class="s1">ORDER BY app_to_hire_pct DESC;</span>
 <span class="s1">'''</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">run</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
 <span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
@@ -8036,7 +8072,7 @@ a.anchor-link {
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>C:\Users\willi\AppData\Local\Temp\ipykernel_29712\2420247800.py:16: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+<pre>C:\Users\willi\AppData\Local\Temp\ipykernel_4092\2420247800.py:16: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
   return pd.read_sql(sql, con)
 </pre>
 </div>
@@ -8077,28 +8113,28 @@ a.anchor-link {
 <tbody>
 <tr>
 <th>0</th>
+<td>2</td>
+<td>カスタマーサポート</td>
+<td>4</td>
+<td>2</td>
 <td>1</td>
-<td>内勤営業</td>
 <td>1</td>
-<td>1</td>
-<td>1</td>
-<td>1</td>
+<td>50.00</td>
+<td>50.00</td>
 <td>100.00</td>
-<td>100.00</td>
-<td>100.00</td>
-<td>100.00</td>
+<td>25.00</td>
 </tr>
 <tr>
 <th>1</th>
+<td>1</td>
+<td>内勤営業</td>
+<td>3</td>
 <td>2</td>
-<td>カスタマーサポート</td>
 <td>1</td>
 <td>0</td>
-<td>0</td>
-<td>0</td>
+<td>66.70</td>
+<td>50.00</td>
 <td>0.00</td>
-<td>NaN</td>
-<td>NaN</td>
 <td>0.00</td>
 </tr>
 <tr>
@@ -8106,12 +8142,51 @@ a.anchor-link {
 <td>3</td>
 <td>システムエンジニア</td>
 <td>2</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>100.00</td>
+<td>0.00</td>
+<td>NaN</td>
+<td>0.00</td>
+</tr>
+<tr>
+<th>3</th>
+<td>4</td>
+<td>データアナリスト</td>
+<td>4</td>
+<td>2</td>
+<td>1</td>
+<td>0</td>
+<td>50.00</td>
+<td>50.00</td>
+<td>0.00</td>
+<td>0.00</td>
+</tr>
+<tr>
+<th>4</th>
+<td>5</td>
+<td>人事アシスタント</td>
+<td>3</td>
 <td>1</td>
 <td>0</td>
 <td>0</td>
-<td>50.00</td>
+<td>33.30</td>
 <td>0.00</td>
 <td>NaN</td>
+<td>0.00</td>
+</tr>
+<tr>
+<th>5</th>
+<td>6</td>
+<td>マーケティング</td>
+<td>9</td>
+<td>2</td>
+<td>1</td>
+<td>0</td>
+<td>22.20</td>
+<td>50.00</td>
+<td>0.00</td>
 <td>0.00</td>
 </tr>
 </tbody>
@@ -8122,18 +8197,18 @@ a.anchor-link {
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=0f35bc56">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=72ba77ad">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="03.-%E6%8E%A1%E7%94%A8%E3%83%AA%E3%83%BC%E3%83%89%E3%82%BF%E3%82%A4%E3%83%A0%EF%BC%88Time-to-Hire%EF%BC%89">03. 採用リードタイム（Time-to-Hire）<a class="anchor-link" href="#03.-%E6%8E%A1%E7%94%A8%E3%83%AA%E3%83%BC%E3%83%89%E3%82%BF%E3%82%A4%E3%83%A0%EF%BC%88Time-to-Hire%EF%BC%89">¶</a></h3><p><strong>ビジネス課題:</strong> 応募から採用決定までの所要日数を求人別に集計し、採用プロセスの効率性を評価する。</p>
-<p><strong>使用テクニック:</strong> <code>DATEDIFF</code>, 集計関数（<code>AVG</code>, <code>MIN</code>, <code>MAX</code>）</p>
+<h3 id="03.-%E6%8E%A1%E7%94%A8%E3%83%AA%E3%83%BC%E3%83%89%E3%82%BF%E3%82%A4%E3%83%A0%EF%BC%88Time-to-Hire%EF%BC%89">03. 採用リードタイム（Time-to-Hire）<a class="anchor-link" href="#03.-%E6%8E%A1%E7%94%A8%E3%83%AA%E3%83%BC%E3%83%89%E3%82%BF%E3%82%A4%E3%83%A0%EF%BC%88Time-to-Hire%EF%BC%89">¶</a></h3><p><strong>ビジネス課題:</strong> 応募から採用決定までの所要日数を求人別に集計する。</p>
+<p><strong>使用テクニック:</strong> <code>DATEDIFF</code>, <code>AVG/MIN/MAX</code></p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=e164c598">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=00d28882">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8142,6 +8217,8 @@ a.anchor-link {
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">sql</span> <span class="o">=</span> <span class="s1">'''</span>
+<span class="s1">-- 採用済み（hired_flag = 1）の応募に絞り、</span>
+<span class="s1">-- 応募日〜採用日の差分を求人別に集計</span>
 <span class="s1">SELECT</span>
 <span class="s1">    j.job_id,</span>
 <span class="s1">    j.job_title,</span>
@@ -8153,7 +8230,7 @@ a.anchor-link {
 <span class="s1">JOIN jobs j ON a.job_id = j.job_id</span>
 <span class="s1">WHERE a.hired_flag = 1</span>
 <span class="s1">GROUP BY j.job_id, j.job_title</span>
-<span class="s1">ORDER BY avg_time_to_hire_days</span>
+<span class="s1">ORDER BY avg_time_to_hire_days;</span>
 <span class="s1">'''</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">run</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
 <span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
@@ -8169,7 +8246,7 @@ a.anchor-link {
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>C:\Users\willi\AppData\Local\Temp\ipykernel_29712\2420247800.py:16: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+<pre>C:\Users\willi\AppData\Local\Temp\ipykernel_4092\2420247800.py:16: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
   return pd.read_sql(sql, con)
 </pre>
 </div>
@@ -8206,12 +8283,12 @@ a.anchor-link {
 <tbody>
 <tr>
 <th>0</th>
+<td>2</td>
+<td>カスタマーサポート</td>
 <td>1</td>
-<td>内勤営業</td>
-<td>1</td>
-<td>19.00</td>
-<td>19</td>
-<td>19</td>
+<td>28.00</td>
+<td>28</td>
+<td>28</td>
 </tr>
 </tbody>
 </table>
@@ -8221,18 +8298,18 @@ a.anchor-link {
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=cc8c3cf3">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=1dc47183">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="04.-%E5%AA%92%E4%BD%93%E5%88%A5%E6%8E%A1%E7%94%A8%E3%83%91%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%B3%E3%82%B9">04. 媒体別採用パフォーマンス<a class="anchor-link" href="#04.-%E5%AA%92%E4%BD%93%E5%88%A5%E6%8E%A1%E7%94%A8%E3%83%91%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%B3%E3%82%B9">¶</a></h3><p><strong>ビジネス課題:</strong> 求人媒体ごとの応募数・採用数・転換率を比較し、採用チャネルへの投資判断（ROI）に活用する。</p>
-<p><strong>使用テクニック:</strong> <code>LEFT JOIN</code>, <code>CASE</code> 式による条件付き集計, <code>NULLIF</code></p>
+<h3 id="04.-%E5%AA%92%E4%BD%93%E5%88%A5%E6%8E%A1%E7%94%A8%E3%83%91%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%B3%E3%82%B9">04. 媒体別採用パフォーマンス<a class="anchor-link" href="#04.-%E5%AA%92%E4%BD%93%E5%88%A5%E6%8E%A1%E7%94%A8%E3%83%91%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%B3%E3%82%B9">¶</a></h3><p><strong>ビジネス課題:</strong> 求人媒体ごとの応募数・採用数・転換率を比較する。</p>
+<p><strong>使用テクニック:</strong> <code>LEFT JOIN</code>, <code>CASE</code>, <code>NULLIF</code></p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=a538355b">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=f6d96462">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8241,6 +8318,7 @@ a.anchor-link {
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">sql</span> <span class="o">=</span> <span class="s1">'''</span>
+<span class="s1">-- 媒体ごとに応募総数と採用数を集計し、転換率を算出</span>
 <span class="s1">SELECT</span>
 <span class="s1">    s.source_id,</span>
 <span class="s1">    s.source_name,</span>
@@ -8252,7 +8330,7 @@ a.anchor-link {
 <span class="s1">FROM applications a</span>
 <span class="s1">LEFT JOIN sources s ON a.source_id = s.source_id</span>
 <span class="s1">GROUP BY s.source_id, s.source_name, s.source_type</span>
-<span class="s1">ORDER BY app_to_hire_pct DESC</span>
+<span class="s1">ORDER BY app_to_hire_pct DESC;</span>
 <span class="s1">'''</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">run</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
 <span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
@@ -8268,7 +8346,7 @@ a.anchor-link {
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>C:\Users\willi\AppData\Local\Temp\ipykernel_29712\2420247800.py:16: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+<pre>C:\Users\willi\AppData\Local\Temp\ipykernel_4092\2420247800.py:16: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
   return pd.read_sql(sql, con)
 </pre>
 </div>
@@ -8305,28 +8383,46 @@ a.anchor-link {
 <tbody>
 <tr>
 <th>0</th>
-<td>1</td>
-<td>JobBoard A</td>
-<td>job_board</td>
 <td>2</td>
+<td>Referral</td>
+<td>referral</td>
+<td>6</td>
 <td>1.00</td>
-<td>50.00</td>
+<td>16.67</td>
 </tr>
 <tr>
 <th>1</th>
-<td>3</td>
-<td>Company Website</td>
-<td>direct</td>
-<td>1</td>
+<td>5</td>
+<td>LinkedIn</td>
+<td>job_board</td>
+<td>5</td>
 <td>0.00</td>
 <td>0.00</td>
 </tr>
 <tr>
 <th>2</th>
-<td>2</td>
-<td>Referral</td>
-<td>referral</td>
+<td>3</td>
+<td>Company Website</td>
+<td>direct</td>
+<td>5</td>
+<td>0.00</td>
+<td>0.00</td>
+</tr>
+<tr>
+<th>3</th>
+<td>4</td>
+<td>Agency X</td>
+<td>agency</td>
+<td>7</td>
+<td>0.00</td>
+<td>0.00</td>
+</tr>
+<tr>
+<th>4</th>
 <td>1</td>
+<td>JobBoard A</td>
+<td>job_board</td>
+<td>2</td>
 <td>0.00</td>
 <td>0.00</td>
 </tr>
@@ -8338,18 +8434,18 @@ a.anchor-link {
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=839f8167">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=0f6e5f61">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="05.-%E7%8F%BE%E5%9C%A8%E3%81%AE%E3%83%91%E3%82%A4%E3%83%97%E3%83%A9%E3%82%A4%E3%83%B3%EF%BC%88%E6%9C%80%E6%96%B0%E3%82%B9%E3%83%86%E3%83%BC%E3%82%B8%E5%88%A5%E4%BB%B6%E6%95%B0%EF%BC%89">05. 現在のパイプライン（最新ステージ別件数）<a class="anchor-link" href="#05.-%E7%8F%BE%E5%9C%A8%E3%81%AE%E3%83%91%E3%82%A4%E3%83%97%E3%83%A9%E3%82%A4%E3%83%B3%EF%BC%88%E6%9C%80%E6%96%B0%E3%82%B9%E3%83%86%E3%83%BC%E3%82%B8%E5%88%A5%E4%BB%B6%E6%95%B0%EF%BC%89">¶</a></h3><p><strong>ビジネス課題:</strong> 各候補者の現在いるステージを特定し、求人ごとの滞留状況を可視化する。</p>
-<p><strong>使用テクニック:</strong> <code>ROW_NUMBER() OVER (PARTITION BY ... ORDER BY ... DESC)</code> で最新ステージを特定</p>
+<h3 id="05.-%E7%8F%BE%E5%9C%A8%E3%81%AE%E3%83%91%E3%82%A4%E3%83%97%E3%83%A9%E3%82%A4%E3%83%B3%EF%BC%88%E6%9C%80%E6%96%B0%E3%82%B9%E3%83%86%E3%83%BC%E3%82%B8%E5%88%A5%E4%BB%B6%E6%95%B0%EF%BC%89">05. 現在のパイプライン（最新ステージ別件数）<a class="anchor-link" href="#05.-%E7%8F%BE%E5%9C%A8%E3%81%AE%E3%83%91%E3%82%A4%E3%83%97%E3%83%A9%E3%82%A4%E3%83%B3%EF%BC%88%E6%9C%80%E6%96%B0%E3%82%B9%E3%83%86%E3%83%BC%E3%82%B8%E5%88%A5%E4%BB%B6%E6%95%B0%EF%BC%89">¶</a></h3><p><strong>ビジネス課題:</strong> 各候補者の現在のステージを特定し、滞留状況を可視化する。</p>
+<p><strong>使用テクニック:</strong> <code>ROW_NUMBER() OVER (PARTITION BY ... ORDER BY ... DESC)</code></p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=296dced6">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=0b53477c">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8358,6 +8454,7 @@ a.anchor-link {
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">sql</span> <span class="o">=</span> <span class="s1">'''</span>
+<span class="s1">-- Step 1: 各応募の最新ステージを ROW_NUMBER() で特定</span>
 <span class="s1">WITH latest_stage AS (</span>
 <span class="s1">    SELECT</span>
 <span class="s1">        s.application_id,</span>
@@ -8369,6 +8466,7 @@ a.anchor-link {
 <span class="s1">        ) AS rn</span>
 <span class="s1">    FROM application_stages s</span>
 <span class="s1">)</span>
+<span class="s1">-- Step 2: 最新ステージ（rn = 1）のみ抽出し、求人×ステージ別に件数を集計</span>
 <span class="s1">SELECT</span>
 <span class="s1">    j.job_id,</span>
 <span class="s1">    j.job_title,</span>
@@ -8379,7 +8477,7 @@ a.anchor-link {
 <span class="s1">JOIN jobs j        ON a.job_id = j.job_id</span>
 <span class="s1">WHERE ls.rn = 1</span>
 <span class="s1">GROUP BY j.job_id, j.job_title, ls.stage_name</span>
-<span class="s1">ORDER BY j.job_id, ls.stage_name</span>
+<span class="s1">ORDER BY j.job_id, ls.stage_name;</span>
 <span class="s1">'''</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">run</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
 <span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
@@ -8395,7 +8493,7 @@ a.anchor-link {
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>C:\Users\willi\AppData\Local\Temp\ipykernel_29712\2420247800.py:16: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+<pre>C:\Users\willi\AppData\Local\Temp\ipykernel_4092\2420247800.py:16: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
   return pd.read_sql(sql, con)
 </pre>
 </div>
@@ -8432,29 +8530,113 @@ a.anchor-link {
 <th>0</th>
 <td>1</td>
 <td>内勤営業</td>
-<td>hired</td>
-<td>1</td>
-</tr>
-<tr>
-<th>1</th>
-<td>2</td>
-<td>カスタマーサポート</td>
-<td>rejected</td>
-<td>1</td>
-</tr>
-<tr>
-<th>2</th>
-<td>3</td>
-<td>システムエンジニア</td>
 <td>applied</td>
 <td>1</td>
 </tr>
 <tr>
+<th>1</th>
+<td>1</td>
+<td>内勤営業</td>
+<td>offer</td>
+<td>1</td>
+</tr>
+<tr>
+<th>2</th>
+<td>1</td>
+<td>内勤営業</td>
+<td>rejected</td>
+<td>1</td>
+</tr>
+<tr>
 <th>3</th>
+<td>2</td>
+<td>カスタマーサポート</td>
+<td>screening</td>
+<td>2</td>
+</tr>
+<tr>
+<th>4</th>
+<td>2</td>
+<td>カスタマーサポート</td>
+<td>interview</td>
+<td>1</td>
+</tr>
+<tr>
+<th>5</th>
+<td>2</td>
+<td>カスタマーサポート</td>
+<td>hired</td>
+<td>1</td>
+</tr>
+<tr>
+<th>6</th>
 <td>3</td>
 <td>システムエンジニア</td>
 <td>interview</td>
+<td>2</td>
+</tr>
+<tr>
+<th>7</th>
+<td>4</td>
+<td>データアナリスト</td>
+<td>screening</td>
+<td>2</td>
+</tr>
+<tr>
+<th>8</th>
+<td>4</td>
+<td>データアナリスト</td>
+<td>interview</td>
 <td>1</td>
+</tr>
+<tr>
+<th>9</th>
+<td>4</td>
+<td>データアナリスト</td>
+<td>offer</td>
+<td>1</td>
+</tr>
+<tr>
+<th>10</th>
+<td>5</td>
+<td>人事アシスタント</td>
+<td>screening</td>
+<td>2</td>
+</tr>
+<tr>
+<th>11</th>
+<td>5</td>
+<td>人事アシスタント</td>
+<td>interview</td>
+<td>1</td>
+</tr>
+<tr>
+<th>12</th>
+<td>6</td>
+<td>マーケティング</td>
+<td>applied</td>
+<td>1</td>
+</tr>
+<tr>
+<th>13</th>
+<td>6</td>
+<td>マーケティング</td>
+<td>screening</td>
+<td>3</td>
+</tr>
+<tr>
+<th>14</th>
+<td>6</td>
+<td>マーケティング</td>
+<td>offer</td>
+<td>1</td>
+</tr>
+<tr>
+<th>15</th>
+<td>6</td>
+<td>マーケティング</td>
+<td>rejected</td>
+<td>4</td>
 </tr>
 </tbody>
 </table>
@@ -8464,7 +8646,7 @@ a.anchor-link {
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a427db63">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=da77ee8a">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8474,7 +8656,7 @@ a.anchor-link {
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=7e20cb91">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=7c8696e9">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>

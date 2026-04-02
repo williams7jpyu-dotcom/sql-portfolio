@@ -19,11 +19,14 @@ USE sql_portfolio;
 ### 2. テーブル作成
 
 ```sql
--- EC売上分析
+-- EC売上分析（ec_sales / ec_rfm / ec_cohort で共用）
 SOURCE ec_sales/schema/create_tables.sql;
 
 -- 採用管理分析
 SOURCE hr_recruitment/schema/create_tables.sql;
+
+-- SaaSメトリクス分析
+SOURCE saas_metrics/schema/create_tables.sql;
 ```
 
 ### 3. サンプルデータの投入
@@ -120,14 +123,28 @@ EC売上分析:
 4. `applications.csv` → applications
 5. `application_stages.csv` → application_stages
 
+SaaSメトリクス分析:
+1. `saas_plans.csv` → saas_plans
+2. `saas_customers.csv` → saas_customers
+3. `saas_mrr_history.csv` → saas_mrr_history
+
 ### 4. 分析クエリの実行
 
 ```sql
 -- 例: EC売上の月次推移を確認
 SOURCE ec_sales/queries/01_monthly_sales.sql;
 
+-- 例: RFMセグメント分類
+SOURCE ec_rfm/queries/03_rfm_segment.sql;
+
+-- 例: コホートリテンション率
+SOURCE ec_cohort/queries/04_cohort_retention_rate.sql;
+
 -- 例: 採用ファネルの転換率を確認
 SOURCE hr_recruitment/queries/02_job_funnel_conversion.sql;
+
+-- 例: SaaS月次MRR推移
+SOURCE saas_metrics/queries/01_monthly_mrr.sql;
 ```
 
 ---

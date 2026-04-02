@@ -3,7 +3,7 @@
 <html lang="en">
 <head><meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>hr_recruitment_analysis</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>ec_cohort_analysis</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <style type="text/css">
     pre { line-height: 125%; }
 td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
@@ -7801,7 +7801,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="%E6%8E%A1%E7%94%A8%E7%AE%A1%E7%90%86%E3%83%BB%E3%83%95%E3%82%A1%E3%83%8D%E3%83%AB%E5%88%86%E6%9E%90">採用管理・ファネル分析<a class="anchor-link" href="#%E6%8E%A1%E7%94%A8%E7%AE%A1%E7%90%86%E3%83%BB%E3%83%95%E3%82%A1%E3%83%8D%E3%83%AB%E5%88%86%E6%9E%90">¶</a></h1><p>架空の採用管理データを使い、採用ファネル・転換率・リードタイム・媒体効果・パイプライン状況を分析します。</p>
+<h1 id="%E3%82%B3%E3%83%9B%E3%83%BC%E3%83%88%E5%88%86%E6%9E%90%E3%83%BB%E3%83%AA%E3%83%86%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%B3%E5%88%86%E6%9E%90">コホート分析・リテンション分析<a class="anchor-link" href="#%E3%82%B3%E3%83%9B%E3%83%BC%E3%83%88%E5%88%86%E6%9E%90%E3%83%BB%E3%83%AA%E3%83%86%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%B3%E5%88%86%E6%9E%90">¶</a></h1><p>顧客の初回購買月ごとにグループ化し、月次の継続率（リテンション）を追跡します。</p>
 <hr/>
 <p><strong>実行環境:</strong> MySQL 8.0 / Python 3 / pandas<br/>
 <strong>DB:</strong> <code>sql_portfolio</code>（<code>SETUP.md</code> の手順で事前に構築）</p>
@@ -7809,7 +7809,7 @@ a.anchor-link {
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fce4636f">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=e5674035">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7820,7 +7820,7 @@ a.anchor-link {
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs jp-mod-noInput" id="cell-id=code">
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=531056d9">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=5bb125eb">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -7831,24 +7831,24 @@ a.anchor-link {
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=6241e6f2">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=8b04fcac">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="01.-%E6%B1%82%E4%BA%BA%E5%88%A5%E3%83%95%E3%82%A1%E3%83%8D%E3%83%AB%E4%BB%B6%E6%95%B0">01. 求人別ファネル件数<a class="anchor-link" href="#01.-%E6%B1%82%E4%BA%BA%E5%88%A5%E3%83%95%E3%82%A1%E3%83%8D%E3%83%AB%E4%BB%B6%E6%95%B0">¶</a></h3><p><strong>ビジネス課題:</strong> 求人ごとの応募〜採用の到達人数を一覧化し、選考進捗を俯瞰する。</p>
-<p><strong>使用テクニック:</strong> <code>COUNT(DISTINCT CASE WHEN ...)</code>, <code>LEFT JOIN</code></p>
+<h3 id="01.-%E3%82%B3%E3%83%9B%E3%83%BC%E3%83%88%E5%AE%9A%E7%BE%A9%EF%BC%88%E5%88%9D%E5%9B%9E%E8%B3%BC%E8%B2%B7%E6%9C%88%E3%81%AE%E7%89%B9%E5%AE%9A%EF%BC%89">01. コホート定義（初回購買月の特定）<a class="anchor-link" href="#01.-%E3%82%B3%E3%83%9B%E3%83%BC%E3%83%88%E5%AE%9A%E7%BE%A9%EF%BC%88%E5%88%9D%E5%9B%9E%E8%B3%BC%E8%B2%B7%E6%9C%88%E3%81%AE%E7%89%B9%E5%AE%9A%EF%BC%89">¶</a></h3><p><strong>ビジネス課題:</strong> 各顧客の初回購買月を特定し、コホートのグループ分けを行う。</p>
+<p><strong>使用テクニック:</strong> <code>MIN()</code>, <code>DATE_FORMAT</code></p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=1369504f">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=957ec077">
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child">
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>C:\Users\willi\AppData\Local\Temp\ipykernel_4092\2420247800.py:16: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+<pre>C:\Users\willi\AppData\Local\Temp\ipykernel_13624\2420247800.py:16: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
   return pd.read_sql(sql, con)
 </pre>
 </div>
@@ -7873,550 +7873,194 @@ a.anchor-link {
 <thead>
 <tr style="text-align: right;">
 <th></th>
-<th>job_id</th>
-<th>job_title</th>
-<th>applied_count</th>
-<th>interview_count</th>
-<th>offer_count</th>
-<th>hired_count</th>
+<th>customer_id</th>
+<th>customer_name</th>
+<th>cohort_month</th>
+<th>first_order_date</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <th>0</th>
-<td>6</td>
-<td>マーケティング</td>
-<td>9</td>
-<td>2</td>
-<td>1</td>
-<td>0</td>
+<td>8</td>
+<td>中村和也</td>
+<td>2024-01</td>
+<td>2024-01-22 13:53:00</td>
 </tr>
 <tr>
 <th>1</th>
-<td>2</td>
-<td>カスタマーサポート</td>
-<td>4</td>
-<td>2</td>
-<td>1</td>
-<td>1</td>
+<td>12</td>
+<td>山本真由</td>
+<td>2024-01</td>
+<td>2024-01-12 11:42:00</td>
 </tr>
 <tr>
 <th>2</th>
-<td>4</td>
-<td>データアナリスト</td>
-<td>4</td>
-<td>2</td>
-<td>1</td>
-<td>0</td>
+<td>13</td>
+<td>松本健二</td>
+<td>2024-01</td>
+<td>2024-01-09 15:40:00</td>
 </tr>
 <tr>
 <th>3</th>
-<td>1</td>
-<td>内勤営業</td>
-<td>3</td>
-<td>2</td>
-<td>1</td>
-<td>0</td>
+<td>25</td>
+<td>高橋翔太</td>
+<td>2024-01</td>
+<td>2024-01-10 09:54:00</td>
 </tr>
 <tr>
 <th>4</th>
-<td>5</td>
-<td>人事アシスタント</td>
-<td>3</td>
-<td>1</td>
-<td>0</td>
-<td>0</td>
+<td>27</td>
+<td>伊藤遥</td>
+<td>2024-01</td>
+<td>2024-01-02 20:20:00</td>
 </tr>
 <tr>
 <th>5</th>
 <td>3</td>
-<td>システムエンジニア</td>
-<td>2</td>
-<td>2</td>
-<td>0</td>
-<td>0</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a91dd1f8">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="02.-%E3%83%95%E3%82%A1%E3%83%8D%E3%83%AB%E3%82%B3%E3%83%B3%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E7%8E%87">02. ファネルコンバージョン率<a class="anchor-link" href="#02.-%E3%83%95%E3%82%A1%E3%83%8D%E3%83%AB%E3%82%B3%E3%83%B3%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E7%8E%87">¶</a></h3><p><strong>ビジネス課題:</strong> 各ステージ間の通過率を算出し、ボトルネックを特定する。</p>
-<p><strong>使用テクニック:</strong> CTE, <code>NULLIF</code>, 比率計算</p>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=68506e06">
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>C:\Users\willi\AppData\Local\Temp\ipykernel_4092\2420247800.py:16: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
-  return pd.read_sql(sql, con)
-</pre>
-</div>
-</div>
-<div class="jp-OutputArea-child">
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-<thead>
-<tr style="text-align: right;">
-<th></th>
-<th>job_id</th>
-<th>job_title</th>
-<th>applied_count</th>
-<th>interview_count</th>
-<th>offer_count</th>
-<th>hired_count</th>
-<th>app_to_interview_pct</th>
-<th>interview_to_offer_pct</th>
-<th>offer_to_hire_pct</th>
-<th>app_to_hire_pct</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th>0</th>
-<td>2</td>
-<td>カスタマーサポート</td>
-<td>4</td>
-<td>2</td>
-<td>1</td>
-<td>1</td>
-<td>50.00</td>
-<td>50.00</td>
-<td>100.00</td>
-<td>25.00</td>
-</tr>
-<tr>
-<th>1</th>
-<td>1</td>
-<td>内勤営業</td>
-<td>3</td>
-<td>2</td>
-<td>1</td>
-<td>0</td>
-<td>66.70</td>
-<td>50.00</td>
-<td>0.00</td>
-<td>0.00</td>
-</tr>
-<tr>
-<th>2</th>
-<td>3</td>
-<td>システムエンジニア</td>
-<td>2</td>
-<td>2</td>
-<td>0</td>
-<td>0</td>
-<td>100.00</td>
-<td>0.00</td>
-<td>NaN</td>
-<td>0.00</td>
-</tr>
-<tr>
-<th>3</th>
-<td>4</td>
-<td>データアナリスト</td>
-<td>4</td>
-<td>2</td>
-<td>1</td>
-<td>0</td>
-<td>50.00</td>
-<td>50.00</td>
-<td>0.00</td>
-<td>0.00</td>
-</tr>
-<tr>
-<th>4</th>
-<td>5</td>
-<td>人事アシスタント</td>
-<td>3</td>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-<td>33.30</td>
-<td>0.00</td>
-<td>NaN</td>
-<td>0.00</td>
-</tr>
-<tr>
-<th>5</th>
-<td>6</td>
-<td>マーケティング</td>
-<td>9</td>
-<td>2</td>
-<td>1</td>
-<td>0</td>
-<td>22.20</td>
-<td>50.00</td>
-<td>0.00</td>
-<td>0.00</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=72ba77ad">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="03.-%E6%8E%A1%E7%94%A8%E3%83%AA%E3%83%BC%E3%83%89%E3%82%BF%E3%82%A4%E3%83%A0%EF%BC%88Time-to-Hire%EF%BC%89">03. 採用リードタイム（Time-to-Hire）<a class="anchor-link" href="#03.-%E6%8E%A1%E7%94%A8%E3%83%AA%E3%83%BC%E3%83%89%E3%82%BF%E3%82%A4%E3%83%A0%EF%BC%88Time-to-Hire%EF%BC%89">¶</a></h3><p><strong>ビジネス課題:</strong> 応募から採用決定までの所要日数を求人別に集計する。</p>
-<p><strong>使用テクニック:</strong> <code>DATEDIFF</code>, <code>AVG/MIN/MAX</code></p>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=00d28882">
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>C:\Users\willi\AppData\Local\Temp\ipykernel_4092\2420247800.py:16: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
-  return pd.read_sql(sql, con)
-</pre>
-</div>
-</div>
-<div class="jp-OutputArea-child">
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-<thead>
-<tr style="text-align: right;">
-<th></th>
-<th>job_id</th>
-<th>job_title</th>
-<th>hired_count</th>
-<th>avg_time_to_hire_days</th>
-<th>min_time_to_hire_days</th>
-<th>max_time_to_hire_days</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th>0</th>
-<td>2</td>
-<td>カスタマーサポート</td>
-<td>1</td>
-<td>28.00</td>
-<td>28</td>
-<td>28</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=1dc47183">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="04.-%E5%AA%92%E4%BD%93%E5%88%A5%E6%8E%A1%E7%94%A8%E3%83%91%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%B3%E3%82%B9">04. 媒体別採用パフォーマンス<a class="anchor-link" href="#04.-%E5%AA%92%E4%BD%93%E5%88%A5%E6%8E%A1%E7%94%A8%E3%83%91%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%B3%E3%82%B9">¶</a></h3><p><strong>ビジネス課題:</strong> 求人媒体ごとの応募数・採用数・転換率を比較する。</p>
-<p><strong>使用テクニック:</strong> <code>LEFT JOIN</code>, <code>CASE</code>, <code>NULLIF</code></p>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=f6d96462">
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>C:\Users\willi\AppData\Local\Temp\ipykernel_4092\2420247800.py:16: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
-  return pd.read_sql(sql, con)
-</pre>
-</div>
-</div>
-<div class="jp-OutputArea-child">
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-<thead>
-<tr style="text-align: right;">
-<th></th>
-<th>source_id</th>
-<th>source_name</th>
-<th>source_type</th>
-<th>applications</th>
-<th>hires</th>
-<th>app_to_hire_pct</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th>0</th>
-<td>2</td>
-<td>Referral</td>
-<td>referral</td>
-<td>6</td>
-<td>1.00</td>
-<td>16.67</td>
-</tr>
-<tr>
-<th>1</th>
-<td>5</td>
-<td>LinkedIn</td>
-<td>job_board</td>
-<td>5</td>
-<td>0.00</td>
-<td>0.00</td>
-</tr>
-<tr>
-<th>2</th>
-<td>3</td>
-<td>Company Website</td>
-<td>direct</td>
-<td>5</td>
-<td>0.00</td>
-<td>0.00</td>
-</tr>
-<tr>
-<th>3</th>
-<td>4</td>
-<td>Agency X</td>
-<td>agency</td>
-<td>7</td>
-<td>0.00</td>
-<td>0.00</td>
-</tr>
-<tr>
-<th>4</th>
-<td>1</td>
-<td>JobBoard A</td>
-<td>job_board</td>
-<td>2</td>
-<td>0.00</td>
-<td>0.00</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=0f6e5f61">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="05.-%E7%8F%BE%E5%9C%A8%E3%81%AE%E3%83%91%E3%82%A4%E3%83%97%E3%83%A9%E3%82%A4%E3%83%B3%EF%BC%88%E6%9C%80%E6%96%B0%E3%82%B9%E3%83%86%E3%83%BC%E3%82%B8%E5%88%A5%E4%BB%B6%E6%95%B0%EF%BC%89">05. 現在のパイプライン（最新ステージ別件数）<a class="anchor-link" href="#05.-%E7%8F%BE%E5%9C%A8%E3%81%AE%E3%83%91%E3%82%A4%E3%83%97%E3%83%A9%E3%82%A4%E3%83%B3%EF%BC%88%E6%9C%80%E6%96%B0%E3%82%B9%E3%83%86%E3%83%BC%E3%82%B8%E5%88%A5%E4%BB%B6%E6%95%B0%EF%BC%89">¶</a></h3><p><strong>ビジネス課題:</strong> 各候補者の現在のステージを特定し、滞留状況を可視化する。</p>
-<p><strong>使用テクニック:</strong> <code>ROW_NUMBER() OVER (PARTITION BY ... ORDER BY ... DESC)</code></p>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=0b53477c">
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>C:\Users\willi\AppData\Local\Temp\ipykernel_4092\2420247800.py:16: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
-  return pd.read_sql(sql, con)
-</pre>
-</div>
-</div>
-<div class="jp-OutputArea-child">
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-<thead>
-<tr style="text-align: right;">
-<th></th>
-<th>job_id</th>
-<th>job_title</th>
-<th>stage_name</th>
-<th>count_in_stage</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th>0</th>
-<td>1</td>
-<td>内勤営業</td>
-<td>applied</td>
-<td>1</td>
-</tr>
-<tr>
-<th>1</th>
-<td>1</td>
-<td>内勤営業</td>
-<td>offer</td>
-<td>1</td>
-</tr>
-<tr>
-<th>2</th>
-<td>1</td>
-<td>内勤営業</td>
-<td>rejected</td>
-<td>1</td>
-</tr>
-<tr>
-<th>3</th>
-<td>2</td>
-<td>カスタマーサポート</td>
-<td>screening</td>
-<td>2</td>
-</tr>
-<tr>
-<th>4</th>
-<td>2</td>
-<td>カスタマーサポート</td>
-<td>interview</td>
-<td>1</td>
-</tr>
-<tr>
-<th>5</th>
-<td>2</td>
-<td>カスタマーサポート</td>
-<td>hired</td>
-<td>1</td>
+<td>佐藤美咲</td>
+<td>2024-02</td>
+<td>2024-02-25 08:55:00</td>
 </tr>
 <tr>
 <th>6</th>
-<td>3</td>
-<td>システムエンジニア</td>
-<td>interview</td>
-<td>2</td>
+<td>18</td>
+<td>山口愛</td>
+<td>2024-02</td>
+<td>2024-02-09 19:37:00</td>
 </tr>
 <tr>
 <th>7</th>
-<td>4</td>
-<td>データアナリスト</td>
-<td>screening</td>
-<td>2</td>
+<td>21</td>
+<td>田中彩</td>
+<td>2024-02</td>
+<td>2024-02-06 20:43:00</td>
 </tr>
 <tr>
 <th>8</th>
 <td>4</td>
-<td>データアナリスト</td>
-<td>interview</td>
-<td>1</td>
+<td>山田大輔</td>
+<td>2024-03</td>
+<td>2024-03-10 14:10:00</td>
 </tr>
 <tr>
 <th>9</th>
-<td>4</td>
-<td>データアナリスト</td>
-<td>offer</td>
-<td>1</td>
+<td>24</td>
+<td>山田舞</td>
+<td>2024-03</td>
+<td>2024-03-24 12:32:00</td>
 </tr>
 <tr>
 <th>10</th>
-<td>5</td>
-<td>人事アシスタント</td>
-<td>screening</td>
-<td>2</td>
+<td>16</td>
+<td>林直樹</td>
+<td>2024-04</td>
+<td>2024-04-01 09:59:00</td>
 </tr>
 <tr>
 <th>11</th>
-<td>5</td>
-<td>人事アシスタント</td>
-<td>interview</td>
-<td>1</td>
+<td>20</td>
+<td>前田浩</td>
+<td>2024-04</td>
+<td>2024-04-07 10:23:00</td>
 </tr>
 <tr>
 <th>12</th>
-<td>6</td>
-<td>マーケティング</td>
-<td>applied</td>
-<td>1</td>
+<td>5</td>
+<td>高橋翔太</td>
+<td>2024-05</td>
+<td>2024-05-22 15:35:00</td>
 </tr>
 <tr>
 <th>13</th>
-<td>6</td>
-<td>マーケティング</td>
-<td>screening</td>
-<td>3</td>
+<td>17</td>
+<td>清水拓也</td>
+<td>2024-05</td>
+<td>2024-05-28 17:27:00</td>
 </tr>
 <tr>
 <th>14</th>
-<td>6</td>
-<td>マーケティング</td>
-<td>offer</td>
-<td>1</td>
+<td>19</td>
+<td>石川誠</td>
+<td>2024-06</td>
+<td>2024-06-18 11:37:00</td>
 </tr>
 <tr>
 <th>15</th>
+<td>29</td>
+<td>小林誠</td>
+<td>2024-06</td>
+<td>2024-06-02 21:21:00</td>
+</tr>
+<tr>
+<th>16</th>
+<td>2</td>
+<td>鈴木一郎</td>
+<td>2024-07</td>
+<td>2024-07-13 19:21:00</td>
+</tr>
+<tr>
+<th>17</th>
 <td>6</td>
-<td>マーケティング</td>
-<td>rejected</td>
-<td>4</td>
+<td>渡辺由美</td>
+<td>2024-07</td>
+<td>2024-07-09 15:15:00</td>
+</tr>
+<tr>
+<th>18</th>
+<td>7</td>
+<td>伊藤拓也</td>
+<td>2024-07</td>
+<td>2024-07-07 16:28:00</td>
+</tr>
+<tr>
+<th>19</th>
+<td>26</td>
+<td>渡辺直樹</td>
+<td>2024-07</td>
+<td>2024-07-28 21:35:00</td>
+</tr>
+<tr>
+<th>20</th>
+<td>30</td>
+<td>加藤花子</td>
+<td>2024-08</td>
+<td>2024-08-26 20:29:00</td>
+</tr>
+<tr>
+<th>21</th>
+<td>15</td>
+<td>木村恵</td>
+<td>2024-09</td>
+<td>2024-09-11 22:48:00</td>
+</tr>
+<tr>
+<th>22</th>
+<td>1</td>
+<td>田中太郎</td>
+<td>2024-10</td>
+<td>2024-10-22 21:35:00</td>
+</tr>
+<tr>
+<th>23</th>
+<td>23</td>
+<td>佐藤健二</td>
+<td>2024-11</td>
+<td>2024-11-14 16:00:00</td>
+</tr>
+<tr>
+<th>24</th>
+<td>10</td>
+<td>加藤浩</td>
+<td>2024-12</td>
+<td>2024-12-27 20:55:00</td>
+</tr>
+<tr>
+<th>25</th>
+<td>28</td>
+<td>中村和也</td>
+<td>2024-12</td>
+<td>2024-12-03 20:17:00</td>
 </tr>
 </tbody>
 </table>
@@ -8426,7 +8070,666 @@ a.anchor-link {
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=da77ee8a">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=421ccf88">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="02.-%E8%B3%BC%E8%B2%B7%E6%9C%88%E3%81%A8%E3%82%B3%E3%83%9B%E3%83%BC%E3%83%88%E6%9C%88%E3%81%AE%E3%83%9E%E3%83%83%E3%83%94%E3%83%B3%E3%82%B0">02. 購買月とコホート月のマッピング<a class="anchor-link" href="#02.-%E8%B3%BC%E8%B2%B7%E6%9C%88%E3%81%A8%E3%82%B3%E3%83%9B%E3%83%BC%E3%83%88%E6%9C%88%E3%81%AE%E3%83%9E%E3%83%83%E3%83%94%E3%83%B3%E3%82%B0">¶</a></h3><p><strong>ビジネス課題:</strong> 各注文に「初回購買からN ヶ月後」を付与する。</p>
+<p><strong>使用テクニック:</strong> <code>TIMESTAMPDIFF(MONTH)</code></p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=67125d44">
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
+<pre>C:\Users\willi\AppData\Local\Temp\ipykernel_13624\2420247800.py:16: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  return pd.read_sql(sql, con)
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>cohort_month</th>
+<th>order_month</th>
+<th>months_since_first</th>
+<th>customer_id</th>
+<th>order_id</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>2024-01</td>
+<td>2024-01</td>
+<td>0</td>
+<td>8</td>
+<td>7</td>
+</tr>
+<tr>
+<th>1</th>
+<td>2024-01</td>
+<td>2024-01</td>
+<td>0</td>
+<td>12</td>
+<td>4</td>
+</tr>
+<tr>
+<th>2</th>
+<td>2024-01</td>
+<td>2024-01</td>
+<td>0</td>
+<td>13</td>
+<td>3</td>
+</tr>
+<tr>
+<th>3</th>
+<td>2024-01</td>
+<td>2024-01</td>
+<td>0</td>
+<td>25</td>
+<td>2</td>
+</tr>
+<tr>
+<th>4</th>
+<td>2024-01</td>
+<td>2024-01</td>
+<td>0</td>
+<td>27</td>
+<td>8</td>
+</tr>
+<tr>
+<th>...</th>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr>
+<th>63</th>
+<td>2024-10</td>
+<td>2024-12</td>
+<td>1</td>
+<td>1</td>
+<td>77</td>
+</tr>
+<tr>
+<th>64</th>
+<td>2024-11</td>
+<td>2024-11</td>
+<td>0</td>
+<td>23</td>
+<td>70</td>
+</tr>
+<tr>
+<th>65</th>
+<td>2024-12</td>
+<td>2024-12</td>
+<td>0</td>
+<td>10</td>
+<td>81</td>
+</tr>
+<tr>
+<th>66</th>
+<td>2024-12</td>
+<td>2024-12</td>
+<td>0</td>
+<td>28</td>
+<td>80</td>
+</tr>
+<tr>
+<th>67</th>
+<td>2024-12</td>
+<td>2024-12</td>
+<td>0</td>
+<td>28</td>
+<td>83</td>
+</tr>
+</tbody>
+</table>
+<p>68 rows × 5 columns</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=36e03617">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="03.-%E3%82%B3%E3%83%9B%E3%83%BC%E3%83%88%E5%88%A5%E3%83%AA%E3%83%86%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%B3%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB">03. コホート別リテンションテーブル<a class="anchor-link" href="#03.-%E3%82%B3%E3%83%9B%E3%83%BC%E3%83%88%E5%88%A5%E3%83%AA%E3%83%86%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%B3%E3%83%86%E3%83%BC%E3%83%96%E3%83%AB">¶</a></h3><p><strong>ビジネス課題:</strong> コホート×経過月の2次元マトリクスで残存人数を集計する。</p>
+<p><strong>使用テクニック:</strong> 条件付き集計 <code>CASE + COUNT DISTINCT</code></p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=b0c6f993">
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
+<pre>C:\Users\willi\AppData\Local\Temp\ipykernel_13624\2420247800.py:16: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  return pd.read_sql(sql, con)
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>cohort_month</th>
+<th>m0</th>
+<th>m1</th>
+<th>m2</th>
+<th>m3</th>
+<th>m4</th>
+<th>m5</th>
+<th>m6</th>
+<th>m7plus</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>2024-01</td>
+<td>5</td>
+<td>1</td>
+<td>2</td>
+<td>1</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<th>1</th>
+<td>2024-02</td>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<th>2</th>
+<td>2024-03</td>
+<td>2</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<th>3</th>
+<td>2024-04</td>
+<td>2</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<th>4</th>
+<td>2024-05</td>
+<td>2</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<th>5</th>
+<td>2024-06</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<th>6</th>
+<td>2024-07</td>
+<td>4</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<th>7</th>
+<td>2024-08</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<th>8</th>
+<td>2024-09</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<th>9</th>
+<td>2024-10</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<th>10</th>
+<td>2024-11</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<th>11</th>
+<td>2024-12</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=65fec91c">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="04.-%E3%82%B3%E3%83%9B%E3%83%BC%E3%83%88%E5%88%A5%E3%83%AA%E3%83%86%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%B3%E7%8E%87%EF%BC%88%25%EF%BC%89">04. コホート別リテンション率（%）<a class="anchor-link" href="#04.-%E3%82%B3%E3%83%9B%E3%83%BC%E3%83%88%E5%88%A5%E3%83%AA%E3%83%86%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%B3%E7%8E%87%EF%BC%88%25%EF%BC%89">¶</a></h3><p><strong>ビジネス課題:</strong> 初月人数を分母にした各月残存率を算出する。</p>
+<p><strong>使用テクニック:</strong> CTE 3段, <code>NULLIF</code>, <code>ROUND</code></p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=64ece9f2">
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
+<pre>C:\Users\willi\AppData\Local\Temp\ipykernel_13624\2420247800.py:16: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  return pd.read_sql(sql, con)
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>cohort_month</th>
+<th>cohort_size</th>
+<th>m1_pct</th>
+<th>m2_pct</th>
+<th>m3_pct</th>
+<th>m4_pct</th>
+<th>m5_pct</th>
+<th>m6_pct</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>2024-01</td>
+<td>5</td>
+<td>20.00</td>
+<td>40.00</td>
+<td>20.00</td>
+<td>40.00</td>
+<td>0.00</td>
+<td>0.00</td>
+</tr>
+<tr>
+<th>1</th>
+<td>2024-02</td>
+<td>3</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>33.30</td>
+<td>0.00</td>
+<td>33.30</td>
+<td>0.00</td>
+</tr>
+<tr>
+<th>2</th>
+<td>2024-03</td>
+<td>2</td>
+<td>50.00</td>
+<td>50.00</td>
+<td>0.00</td>
+<td>50.00</td>
+<td>0.00</td>
+<td>0.00</td>
+</tr>
+<tr>
+<th>3</th>
+<td>2024-04</td>
+<td>2</td>
+<td>0.00</td>
+<td>50.00</td>
+<td>50.00</td>
+<td>50.00</td>
+<td>0.00</td>
+<td>50.00</td>
+</tr>
+<tr>
+<th>4</th>
+<td>2024-05</td>
+<td>2</td>
+<td>50.00</td>
+<td>50.00</td>
+<td>50.00</td>
+<td>100.00</td>
+<td>50.00</td>
+<td>0.00</td>
+</tr>
+<tr>
+<th>5</th>
+<td>2024-06</td>
+<td>2</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>50.00</td>
+<td>50.00</td>
+<td>50.00</td>
+<td>0.00</td>
+</tr>
+<tr>
+<th>6</th>
+<td>2024-07</td>
+<td>4</td>
+<td>25.00</td>
+<td>0.00</td>
+<td>25.00</td>
+<td>50.00</td>
+<td>25.00</td>
+<td>0.00</td>
+</tr>
+<tr>
+<th>7</th>
+<td>2024-08</td>
+<td>1</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>100.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+</tr>
+<tr>
+<th>8</th>
+<td>2024-09</td>
+<td>1</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+</tr>
+<tr>
+<th>9</th>
+<td>2024-10</td>
+<td>1</td>
+<td>100.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+</tr>
+<tr>
+<th>10</th>
+<td>2024-11</td>
+<td>1</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+</tr>
+<tr>
+<th>11</th>
+<td>2024-12</td>
+<td>2</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+<td>0.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=bb2a4c91">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="05.-%E7%B5%8C%E9%81%8E%E6%9C%88%E5%88%A5-%E5%B9%B3%E5%9D%87%E3%83%AA%E3%83%86%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%B3%E7%8E%87%E3%82%B5%E3%83%9E%E3%83%AA">05. 経過月別 平均リテンション率サマリ<a class="anchor-link" href="#05.-%E7%B5%8C%E9%81%8E%E6%9C%88%E5%88%A5-%E5%B9%B3%E5%9D%87%E3%83%AA%E3%83%86%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%B3%E7%8E%87%E3%82%B5%E3%83%9E%E3%83%AA">¶</a></h3><p><strong>ビジネス課題:</strong> 全コホートを横断した平均残存率で傾向を把握する。</p>
+<p><strong>使用テクニック:</strong> <code>AVG()</code>, サブクエリ</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=e5ea507b">
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
+<pre>C:\Users\willi\AppData\Local\Temp\ipykernel_13624\2420247800.py:16: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  return pd.read_sql(sql, con)
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>months_after_first</th>
+<th>active_customers</th>
+<th>total_customers</th>
+<th>avg_retention_pct</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>1</td>
+<td>5</td>
+<td>26</td>
+<td>19.20</td>
+</tr>
+<tr>
+<th>1</th>
+<td>2</td>
+<td>5</td>
+<td>26</td>
+<td>19.20</td>
+</tr>
+<tr>
+<th>2</th>
+<td>3</td>
+<td>7</td>
+<td>26</td>
+<td>26.90</td>
+</tr>
+<tr>
+<th>3</th>
+<td>4</td>
+<td>9</td>
+<td>26</td>
+<td>34.60</td>
+</tr>
+<tr>
+<th>4</th>
+<td>5</td>
+<td>4</td>
+<td>26</td>
+<td>15.40</td>
+</tr>
+<tr>
+<th>5</th>
+<td>6</td>
+<td>1</td>
+<td>26</td>
+<td>3.80</td>
+</tr>
+<tr>
+<th>6</th>
+<td>9</td>
+<td>2</td>
+<td>26</td>
+<td>7.70</td>
+</tr>
+<tr>
+<th>7</th>
+<td>10</td>
+<td>1</td>
+<td>26</td>
+<td>3.80</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=6c21fbb0">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -8435,7 +8738,7 @@ a.anchor-link {
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=7c8696e9">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=54ba01be">
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>

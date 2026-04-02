@@ -3,7 +3,7 @@
 <html lang="en">
 <head><meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>hr_recruitment_analysis</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>ec_rfm_analysis</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <style type="text/css">
     pre { line-height: 125%; }
 td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
@@ -7800,8 +7800,9 @@ a.anchor-link {
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="%E6%8E%A1%E7%94%A8%E7%AE%A1%E7%90%86%E3%83%BB%E3%83%95%E3%82%A1%E3%83%8D%E3%83%AB%E5%88%86%E6%9E%90">採用管理・ファネル分析<a class="anchor-link" href="#%E6%8E%A1%E7%94%A8%E7%AE%A1%E7%90%86%E3%83%BB%E3%83%95%E3%82%A1%E3%83%8D%E3%83%AB%E5%88%86%E6%9E%90">¶</a></h1><p>架空の採用管理データを使い、採用ファネル・転換率・リードタイム・媒体効果・パイプライン状況を分析します。</p>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h1 id="RFM%E9%A1%A7%E5%AE%A2%E3%82%BB%E3%82%B0%E3%83%A1%E3%83%B3%E3%83%86%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E5%88%86%E6%9E%90">RFM顧客セグメンテーション分析<a class="anchor-link" href="#RFM%E9%A1%A7%E5%AE%A2%E3%82%BB%E3%82%B0%E3%83%A1%E3%83%B3%E3%83%86%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E5%88%86%E6%9E%90">¶</a></h1><p>ECサイトの注文データを用いて、RFM（Recency・Frequency・Monetary）で顧客をスコアリング・セグメント分類します。</p>
 <hr/>
 <p><strong>実行環境:</strong> MySQL 8.0 / Python 3 / pandas<br/>
 <strong>DB:</strong> <code>sql_portfolio</code>（<code>SETUP.md</code> の手順で事前に構築）</p>
@@ -7809,51 +7810,121 @@ a.anchor-link {
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fce4636f">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=64eca156">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="%E3%82%BB%E3%83%83%E3%83%88%E3%82%A2%E3%83%83%E3%83%97">セットアップ<a class="anchor-link" href="#%E3%82%BB%E3%83%83%E3%83%88%E3%82%A2%E3%83%83%E3%83%97">¶</a></h2>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs jp-mod-noInput" id="cell-id=code">
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=531056d9">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=code">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">mysql.connector</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">HTML</span>
+
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">'display.max_columns'</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">'display.max_rows'</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">'display.float_format'</span><span class="p">,</span> <span class="s1">'</span><span class="si">{:,.2f}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">)</span>
+
+<span class="n">con</span> <span class="o">=</span> <span class="n">mysql</span><span class="o">.</span><span class="n">connector</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+    <span class="n">host</span><span class="o">=</span><span class="s1">'localhost'</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="s1">'root'</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s1">''</span><span class="p">,</span>
+    <span class="n">database</span><span class="o">=</span><span class="s1">'sql_portfolio'</span><span class="p">,</span>
+    <span class="n">charset</span><span class="o">=</span><span class="s1">'utf8mb4'</span>
+<span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="n">sql</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="n">con</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9b96be43">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <hr/>
 <h2 id="%E5%88%86%E6%9E%90%E3%82%AF%E3%82%A8%E3%83%AA">分析クエリ<a class="anchor-link" href="#%E5%88%86%E6%9E%90%E3%82%AF%E3%82%A8%E3%83%AA">¶</a></h2>
 </div>
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=6241e6f2">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=d0b31715">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="01.-%E6%B1%82%E4%BA%BA%E5%88%A5%E3%83%95%E3%82%A1%E3%83%8D%E3%83%AB%E4%BB%B6%E6%95%B0">01. 求人別ファネル件数<a class="anchor-link" href="#01.-%E6%B1%82%E4%BA%BA%E5%88%A5%E3%83%95%E3%82%A1%E3%83%8D%E3%83%AB%E4%BB%B6%E6%95%B0">¶</a></h3><p><strong>ビジネス課題:</strong> 求人ごとの応募〜採用の到達人数を一覧化し、選考進捗を俯瞰する。</p>
-<p><strong>使用テクニック:</strong> <code>COUNT(DISTINCT CASE WHEN ...)</code>, <code>LEFT JOIN</code></p>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="01.-RFM%E3%82%B9%E3%82%B3%E3%82%A2%E7%AE%97%E5%87%BA">01. RFMスコア算出<a class="anchor-link" href="#01.-RFM%E3%82%B9%E3%82%B3%E3%82%A2%E7%AE%97%E5%87%BA">¶</a></h3><p><strong>ビジネス課題:</strong> 顧客ごとのR（最終購買日）・F（購買回数）・M（購買金額）を集計する。</p>
+<p><strong>使用テクニック:</strong> CTE, <code>DATEDIFF</code>, <code>CURDATE()</code></p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=1369504f">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=40ede1b7">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">sql</span> <span class="o">=</span> <span class="s1">'''</span>
+<span class="s1">WITH customer_orders AS (</span>
+<span class="s1">    SELECT</span>
+<span class="s1">        o.customer_id,</span>
+<span class="s1">        MAX(o.order_date)                AS last_order_date,</span>
+<span class="s1">        COUNT(DISTINCT o.order_id)       AS frequency,</span>
+<span class="s1">        SUM(oi.quantity * oi.unit_price)  AS monetary</span>
+<span class="s1">    FROM orders o</span>
+<span class="s1">    JOIN order_items oi ON o.order_id = oi.order_id</span>
+<span class="s1">    WHERE o.status IN ('paid', 'shipped')</span>
+<span class="s1">    GROUP BY o.customer_id</span>
+<span class="s1">)</span>
+<span class="s1">SELECT</span>
+<span class="s1">    c.customer_id,</span>
+<span class="s1">    c.customer_name,</span>
+<span class="s1">    co.last_order_date,</span>
+<span class="s1">    DATEDIFF(CURDATE(), co.last_order_date) AS recency_days,</span>
+<span class="s1">    co.frequency,</span>
+<span class="s1">    co.monetary</span>
+<span class="s1">FROM customers c</span>
+<span class="s1">JOIN customer_orders co ON c.customer_id = co.customer_id</span>
+<span class="s1">ORDER BY co.monetary DESC;</span>
+<span class="s1">'''</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">run</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>C:\Users\willi\AppData\Local\Temp\ipykernel_4092\2420247800.py:16: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+<pre>C:\Users\willi\AppData\Local\Temp\ipykernel_26396\2420247800.py:16: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
   return pd.read_sql(sql, con)
 </pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -7873,550 +7944,248 @@ a.anchor-link {
 <thead>
 <tr style="text-align: right;">
 <th></th>
-<th>job_id</th>
-<th>job_title</th>
-<th>applied_count</th>
-<th>interview_count</th>
-<th>offer_count</th>
-<th>hired_count</th>
+<th>customer_id</th>
+<th>customer_name</th>
+<th>last_order_date</th>
+<th>recency_days</th>
+<th>frequency</th>
+<th>monetary</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <th>0</th>
+<td>29</td>
+<td>小林誠</td>
+<td>2024-11-23 22:09:00</td>
+<td>495</td>
 <td>6</td>
-<td>マーケティング</td>
-<td>9</td>
-<td>2</td>
-<td>1</td>
-<td>0</td>
+<td>59,900.00</td>
 </tr>
 <tr>
 <th>1</th>
-<td>2</td>
-<td>カスタマーサポート</td>
-<td>4</td>
-<td>2</td>
 <td>1</td>
-<td>1</td>
+<td>田中太郎</td>
+<td>2024-12-22 11:25:00</td>
+<td>466</td>
+<td>3</td>
+<td>57,500.00</td>
 </tr>
 <tr>
 <th>2</th>
-<td>4</td>
-<td>データアナリスト</td>
-<td>4</td>
-<td>2</td>
-<td>1</td>
-<td>0</td>
+<td>5</td>
+<td>高橋翔太</td>
+<td>2024-11-02 12:23:00</td>
+<td>516</td>
+<td>5</td>
+<td>50,100.00</td>
 </tr>
 <tr>
 <th>3</th>
-<td>1</td>
-<td>内勤営業</td>
-<td>3</td>
-<td>2</td>
-<td>1</td>
-<td>0</td>
+<td>13</td>
+<td>松本健二</td>
+<td>2024-05-22 18:23:00</td>
+<td>680</td>
+<td>4</td>
+<td>43,400.00</td>
 </tr>
 <tr>
 <th>4</th>
-<td>5</td>
-<td>人事アシスタント</td>
+<td>4</td>
+<td>山田大輔</td>
+<td>2024-06-08 11:04:00</td>
+<td>663</td>
 <td>3</td>
-<td>1</td>
-<td>0</td>
-<td>0</td>
+<td>42,500.00</td>
 </tr>
 <tr>
 <th>5</th>
+<td>17</td>
+<td>清水拓也</td>
+<td>2024-10-09 10:59:00</td>
+<td>540</td>
 <td>3</td>
-<td>システムエンジニア</td>
-<td>2</td>
-<td>2</td>
-<td>0</td>
-<td>0</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a91dd1f8">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="02.-%E3%83%95%E3%82%A1%E3%83%8D%E3%83%AB%E3%82%B3%E3%83%B3%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E7%8E%87">02. ファネルコンバージョン率<a class="anchor-link" href="#02.-%E3%83%95%E3%82%A1%E3%83%8D%E3%83%AB%E3%82%B3%E3%83%B3%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E7%8E%87">¶</a></h3><p><strong>ビジネス課題:</strong> 各ステージ間の通過率を算出し、ボトルネックを特定する。</p>
-<p><strong>使用テクニック:</strong> CTE, <code>NULLIF</code>, 比率計算</p>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=68506e06">
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>C:\Users\willi\AppData\Local\Temp\ipykernel_4092\2420247800.py:16: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
-  return pd.read_sql(sql, con)
-</pre>
-</div>
-</div>
-<div class="jp-OutputArea-child">
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-<thead>
-<tr style="text-align: right;">
-<th></th>
-<th>job_id</th>
-<th>job_title</th>
-<th>applied_count</th>
-<th>interview_count</th>
-<th>offer_count</th>
-<th>hired_count</th>
-<th>app_to_interview_pct</th>
-<th>interview_to_offer_pct</th>
-<th>offer_to_hire_pct</th>
-<th>app_to_hire_pct</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th>0</th>
-<td>2</td>
-<td>カスタマーサポート</td>
-<td>4</td>
-<td>2</td>
-<td>1</td>
-<td>1</td>
-<td>50.00</td>
-<td>50.00</td>
-<td>100.00</td>
-<td>25.00</td>
-</tr>
-<tr>
-<th>1</th>
-<td>1</td>
-<td>内勤営業</td>
-<td>3</td>
-<td>2</td>
-<td>1</td>
-<td>0</td>
-<td>66.70</td>
-<td>50.00</td>
-<td>0.00</td>
-<td>0.00</td>
-</tr>
-<tr>
-<th>2</th>
-<td>3</td>
-<td>システムエンジニア</td>
-<td>2</td>
-<td>2</td>
-<td>0</td>
-<td>0</td>
-<td>100.00</td>
-<td>0.00</td>
-<td>NaN</td>
-<td>0.00</td>
-</tr>
-<tr>
-<th>3</th>
-<td>4</td>
-<td>データアナリスト</td>
-<td>4</td>
-<td>2</td>
-<td>1</td>
-<td>0</td>
-<td>50.00</td>
-<td>50.00</td>
-<td>0.00</td>
-<td>0.00</td>
-</tr>
-<tr>
-<th>4</th>
-<td>5</td>
-<td>人事アシスタント</td>
-<td>3</td>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-<td>33.30</td>
-<td>0.00</td>
-<td>NaN</td>
-<td>0.00</td>
-</tr>
-<tr>
-<th>5</th>
-<td>6</td>
-<td>マーケティング</td>
-<td>9</td>
-<td>2</td>
-<td>1</td>
-<td>0</td>
-<td>22.20</td>
-<td>50.00</td>
-<td>0.00</td>
-<td>0.00</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=72ba77ad">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="03.-%E6%8E%A1%E7%94%A8%E3%83%AA%E3%83%BC%E3%83%89%E3%82%BF%E3%82%A4%E3%83%A0%EF%BC%88Time-to-Hire%EF%BC%89">03. 採用リードタイム（Time-to-Hire）<a class="anchor-link" href="#03.-%E6%8E%A1%E7%94%A8%E3%83%AA%E3%83%BC%E3%83%89%E3%82%BF%E3%82%A4%E3%83%A0%EF%BC%88Time-to-Hire%EF%BC%89">¶</a></h3><p><strong>ビジネス課題:</strong> 応募から採用決定までの所要日数を求人別に集計する。</p>
-<p><strong>使用テクニック:</strong> <code>DATEDIFF</code>, <code>AVG/MIN/MAX</code></p>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=00d28882">
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>C:\Users\willi\AppData\Local\Temp\ipykernel_4092\2420247800.py:16: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
-  return pd.read_sql(sql, con)
-</pre>
-</div>
-</div>
-<div class="jp-OutputArea-child">
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-<thead>
-<tr style="text-align: right;">
-<th></th>
-<th>job_id</th>
-<th>job_title</th>
-<th>hired_count</th>
-<th>avg_time_to_hire_days</th>
-<th>min_time_to_hire_days</th>
-<th>max_time_to_hire_days</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th>0</th>
-<td>2</td>
-<td>カスタマーサポート</td>
-<td>1</td>
-<td>28.00</td>
-<td>28</td>
-<td>28</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=1dc47183">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="04.-%E5%AA%92%E4%BD%93%E5%88%A5%E6%8E%A1%E7%94%A8%E3%83%91%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%B3%E3%82%B9">04. 媒体別採用パフォーマンス<a class="anchor-link" href="#04.-%E5%AA%92%E4%BD%93%E5%88%A5%E6%8E%A1%E7%94%A8%E3%83%91%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%B3%E3%82%B9">¶</a></h3><p><strong>ビジネス課題:</strong> 求人媒体ごとの応募数・採用数・転換率を比較する。</p>
-<p><strong>使用テクニック:</strong> <code>LEFT JOIN</code>, <code>CASE</code>, <code>NULLIF</code></p>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=f6d96462">
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>C:\Users\willi\AppData\Local\Temp\ipykernel_4092\2420247800.py:16: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
-  return pd.read_sql(sql, con)
-</pre>
-</div>
-</div>
-<div class="jp-OutputArea-child">
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-<thead>
-<tr style="text-align: right;">
-<th></th>
-<th>source_id</th>
-<th>source_name</th>
-<th>source_type</th>
-<th>applications</th>
-<th>hires</th>
-<th>app_to_hire_pct</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th>0</th>
-<td>2</td>
-<td>Referral</td>
-<td>referral</td>
-<td>6</td>
-<td>1.00</td>
-<td>16.67</td>
-</tr>
-<tr>
-<th>1</th>
-<td>5</td>
-<td>LinkedIn</td>
-<td>job_board</td>
-<td>5</td>
-<td>0.00</td>
-<td>0.00</td>
-</tr>
-<tr>
-<th>2</th>
-<td>3</td>
-<td>Company Website</td>
-<td>direct</td>
-<td>5</td>
-<td>0.00</td>
-<td>0.00</td>
-</tr>
-<tr>
-<th>3</th>
-<td>4</td>
-<td>Agency X</td>
-<td>agency</td>
-<td>7</td>
-<td>0.00</td>
-<td>0.00</td>
-</tr>
-<tr>
-<th>4</th>
-<td>1</td>
-<td>JobBoard A</td>
-<td>job_board</td>
-<td>2</td>
-<td>0.00</td>
-<td>0.00</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=0f6e5f61">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h3 id="05.-%E7%8F%BE%E5%9C%A8%E3%81%AE%E3%83%91%E3%82%A4%E3%83%97%E3%83%A9%E3%82%A4%E3%83%B3%EF%BC%88%E6%9C%80%E6%96%B0%E3%82%B9%E3%83%86%E3%83%BC%E3%82%B8%E5%88%A5%E4%BB%B6%E6%95%B0%EF%BC%89">05. 現在のパイプライン（最新ステージ別件数）<a class="anchor-link" href="#05.-%E7%8F%BE%E5%9C%A8%E3%81%AE%E3%83%91%E3%82%A4%E3%83%97%E3%83%A9%E3%82%A4%E3%83%B3%EF%BC%88%E6%9C%80%E6%96%B0%E3%82%B9%E3%83%86%E3%83%BC%E3%82%B8%E5%88%A5%E4%BB%B6%E6%95%B0%EF%BC%89">¶</a></h3><p><strong>ビジネス課題:</strong> 各候補者の現在のステージを特定し、滞留状況を可視化する。</p>
-<p><strong>使用テクニック:</strong> <code>ROW_NUMBER() OVER (PARTITION BY ... ORDER BY ... DESC)</code></p>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=0b53477c">
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
-<pre>C:\Users\willi\AppData\Local\Temp\ipykernel_4092\2420247800.py:16: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
-  return pd.read_sql(sql, con)
-</pre>
-</div>
-</div>
-<div class="jp-OutputArea-child">
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
-<div>
-<style scoped="">
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-<thead>
-<tr style="text-align: right;">
-<th></th>
-<th>job_id</th>
-<th>job_title</th>
-<th>stage_name</th>
-<th>count_in_stage</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th>0</th>
-<td>1</td>
-<td>内勤営業</td>
-<td>applied</td>
-<td>1</td>
-</tr>
-<tr>
-<th>1</th>
-<td>1</td>
-<td>内勤営業</td>
-<td>offer</td>
-<td>1</td>
-</tr>
-<tr>
-<th>2</th>
-<td>1</td>
-<td>内勤営業</td>
-<td>rejected</td>
-<td>1</td>
-</tr>
-<tr>
-<th>3</th>
-<td>2</td>
-<td>カスタマーサポート</td>
-<td>screening</td>
-<td>2</td>
-</tr>
-<tr>
-<th>4</th>
-<td>2</td>
-<td>カスタマーサポート</td>
-<td>interview</td>
-<td>1</td>
-</tr>
-<tr>
-<th>5</th>
-<td>2</td>
-<td>カスタマーサポート</td>
-<td>hired</td>
-<td>1</td>
+<td>23,800.00</td>
 </tr>
 <tr>
 <th>6</th>
-<td>3</td>
-<td>システムエンジニア</td>
-<td>interview</td>
-<td>2</td>
+<td>27</td>
+<td>伊藤遥</td>
+<td>2024-11-12 17:35:00</td>
+<td>506</td>
+<td>4</td>
+<td>22,100.00</td>
 </tr>
 <tr>
 <th>7</th>
-<td>4</td>
-<td>データアナリスト</td>
-<td>screening</td>
+<td>25</td>
+<td>高橋翔太</td>
+<td>2024-04-17 22:00:00</td>
+<td>715</td>
 <td>2</td>
+<td>22,000.00</td>
 </tr>
 <tr>
 <th>8</th>
-<td>4</td>
-<td>データアナリスト</td>
-<td>interview</td>
-<td>1</td>
+<td>8</td>
+<td>中村和也</td>
+<td>2024-06-09 18:31:00</td>
+<td>662</td>
+<td>3</td>
+<td>21,960.00</td>
 </tr>
 <tr>
 <th>9</th>
+<td>20</td>
+<td>前田浩</td>
+<td>2024-10-19 09:04:00</td>
+<td>530</td>
 <td>4</td>
-<td>データアナリスト</td>
-<td>offer</td>
-<td>1</td>
+<td>21,560.00</td>
 </tr>
 <tr>
 <th>10</th>
-<td>5</td>
-<td>人事アシスタント</td>
-<td>screening</td>
-<td>2</td>
+<td>6</td>
+<td>渡辺由美</td>
+<td>2024-12-26 19:06:00</td>
+<td>462</td>
+<td>3</td>
+<td>20,500.00</td>
 </tr>
 <tr>
 <th>11</th>
-<td>5</td>
-<td>人事アシスタント</td>
-<td>interview</td>
-<td>1</td>
+<td>24</td>
+<td>山田舞</td>
+<td>2024-08-18 08:47:00</td>
+<td>592</td>
+<td>3</td>
+<td>19,900.00</td>
 </tr>
 <tr>
 <th>12</th>
-<td>6</td>
-<td>マーケティング</td>
-<td>applied</td>
-<td>1</td>
+<td>3</td>
+<td>佐藤美咲</td>
+<td>2024-06-23 18:03:00</td>
+<td>648</td>
+<td>2</td>
+<td>16,460.00</td>
 </tr>
 <tr>
 <th>13</th>
-<td>6</td>
-<td>マーケティング</td>
-<td>screening</td>
+<td>2</td>
+<td>鈴木一郎</td>
+<td>2024-08-19 15:32:00</td>
+<td>591</td>
 <td>3</td>
+<td>15,600.00</td>
 </tr>
 <tr>
 <th>14</th>
-<td>6</td>
-<td>マーケティング</td>
-<td>offer</td>
-<td>1</td>
+<td>21</td>
+<td>田中彩</td>
+<td>2024-11-09 10:47:00</td>
+<td>509</td>
+<td>3</td>
+<td>14,000.00</td>
 </tr>
 <tr>
 <th>15</th>
-<td>6</td>
-<td>マーケティング</td>
-<td>rejected</td>
-<td>4</td>
+<td>19</td>
+<td>石川誠</td>
+<td>2024-06-18 11:37:00</td>
+<td>653</td>
+<td>1</td>
+<td>11,400.00</td>
+</tr>
+<tr>
+<th>16</th>
+<td>7</td>
+<td>伊藤拓也</td>
+<td>2024-11-22 11:42:00</td>
+<td>496</td>
+<td>3</td>
+<td>10,880.00</td>
+</tr>
+<tr>
+<th>17</th>
+<td>26</td>
+<td>渡辺直樹</td>
+<td>2024-12-22 21:47:00</td>
+<td>466</td>
+<td>2</td>
+<td>9,600.00</td>
+</tr>
+<tr>
+<th>18</th>
+<td>16</td>
+<td>林直樹</td>
+<td>2024-06-08 20:30:00</td>
+<td>663</td>
+<td>2</td>
+<td>6,600.00</td>
+</tr>
+<tr>
+<th>19</th>
+<td>30</td>
+<td>加藤花子</td>
+<td>2024-12-08 21:10:00</td>
+<td>480</td>
+<td>2</td>
+<td>6,000.00</td>
+</tr>
+<tr>
+<th>20</th>
+<td>28</td>
+<td>中村和也</td>
+<td>2024-12-16 11:12:00</td>
+<td>472</td>
+<td>2</td>
+<td>5,500.00</td>
+</tr>
+<tr>
+<th>21</th>
+<td>12</td>
+<td>山本真由</td>
+<td>2024-01-12 11:42:00</td>
+<td>811</td>
+<td>1</td>
+<td>4,500.00</td>
+</tr>
+<tr>
+<th>22</th>
+<td>15</td>
+<td>木村恵</td>
+<td>2024-09-11 22:48:00</td>
+<td>568</td>
+<td>1</td>
+<td>4,400.00</td>
+</tr>
+<tr>
+<th>23</th>
+<td>23</td>
+<td>佐藤健二</td>
+<td>2024-11-14 16:00:00</td>
+<td>504</td>
+<td>1</td>
+<td>4,400.00</td>
+</tr>
+<tr>
+<th>24</th>
+<td>18</td>
+<td>山口愛</td>
+<td>2024-02-09 19:37:00</td>
+<td>783</td>
+<td>1</td>
+<td>3,000.00</td>
+</tr>
+<tr>
+<th>25</th>
+<td>10</td>
+<td>加藤浩</td>
+<td>2024-12-27 20:55:00</td>
+<td>461</td>
+<td>1</td>
+<td>2,700.00</td>
 </tr>
 </tbody>
 </table>
@@ -8426,21 +8195,1431 @@ a.anchor-link {
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=da77ee8a">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=54222162">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="02.-RFM%E3%82%B9%E3%82%B3%E3%82%A2%E3%81%AE5%E6%AE%B5%E9%9A%8E%E3%82%B9%E3%82%B3%E3%82%A2%E3%83%AA%E3%83%B3%E3%82%B0">02. RFMスコアの5段階スコアリング<a class="anchor-link" href="#02.-RFM%E3%82%B9%E3%82%B3%E3%82%A2%E3%81%AE5%E6%AE%B5%E9%9A%8E%E3%82%B9%E3%82%B3%E3%82%A2%E3%83%AA%E3%83%B3%E3%82%B0">¶</a></h3><p><strong>ビジネス課題:</strong> R/F/M を5段階にスコアリングし、定量比較可能な指標へ変換する。</p>
+<p><strong>使用テクニック:</strong> <code>NTILE(5)</code> の多軸適用</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=c9858986">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">sql</span> <span class="o">=</span> <span class="s1">'''</span>
+<span class="s1">WITH customer_rfm AS (</span>
+<span class="s1">    SELECT</span>
+<span class="s1">        o.customer_id,</span>
+<span class="s1">        DATEDIFF(CURDATE(), MAX(o.order_date))  AS recency,</span>
+<span class="s1">        COUNT(DISTINCT o.order_id)              AS frequency,</span>
+<span class="s1">        SUM(oi.quantity * oi.unit_price)         AS monetary</span>
+<span class="s1">    FROM orders o</span>
+<span class="s1">    JOIN order_items oi ON o.order_id = oi.order_id</span>
+<span class="s1">    WHERE o.status IN ('paid', 'shipped')</span>
+<span class="s1">    GROUP BY o.customer_id</span>
+<span class="s1">),</span>
+<span class="s1">scored AS (</span>
+<span class="s1">    SELECT</span>
+<span class="s1">        customer_id,</span>
+<span class="s1">        recency,</span>
+<span class="s1">        frequency,</span>
+<span class="s1">        monetary,</span>
+<span class="s1">        -- Recency は小さいほうが良いので DESC でスコア付け</span>
+<span class="s1">        NTILE(5) OVER (ORDER BY recency DESC)   AS r_score,</span>
+<span class="s1">        NTILE(5) OVER (ORDER BY frequency ASC)  AS f_score,</span>
+<span class="s1">        NTILE(5) OVER (ORDER BY monetary ASC)   AS m_score</span>
+<span class="s1">    FROM customer_rfm</span>
+<span class="s1">)</span>
+<span class="s1">SELECT</span>
+<span class="s1">    s.customer_id,</span>
+<span class="s1">    c.customer_name,</span>
+<span class="s1">    s.recency,</span>
+<span class="s1">    s.frequency,</span>
+<span class="s1">    s.monetary,</span>
+<span class="s1">    s.r_score,</span>
+<span class="s1">    s.f_score,</span>
+<span class="s1">    s.m_score,</span>
+<span class="s1">    s.r_score + s.f_score + s.m_score AS rfm_total</span>
+<span class="s1">FROM scored s</span>
+<span class="s1">JOIN customers c ON s.customer_id = c.customer_id</span>
+<span class="s1">ORDER BY rfm_total DESC, s.monetary DESC;</span>
+<span class="s1">'''</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">run</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
+<pre>C:\Users\willi\AppData\Local\Temp\ipykernel_26396\2420247800.py:16: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  return pd.read_sql(sql, con)
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>customer_id</th>
+<th>customer_name</th>
+<th>recency</th>
+<th>frequency</th>
+<th>monetary</th>
+<th>r_score</th>
+<th>f_score</th>
+<th>m_score</th>
+<th>rfm_total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>29</td>
+<td>小林誠</td>
+<td>495</td>
+<td>6</td>
+<td>59,900.00</td>
+<td>4</td>
+<td>5</td>
+<td>5</td>
+<td>14</td>
+</tr>
+<tr>
+<th>1</th>
+<td>1</td>
+<td>田中太郎</td>
+<td>466</td>
+<td>3</td>
+<td>57,500.00</td>
+<td>5</td>
+<td>4</td>
+<td>5</td>
+<td>14</td>
+</tr>
+<tr>
+<th>2</th>
+<td>5</td>
+<td>高橋翔太</td>
+<td>516</td>
+<td>5</td>
+<td>50,100.00</td>
+<td>3</td>
+<td>5</td>
+<td>5</td>
+<td>13</td>
+</tr>
+<tr>
+<th>3</th>
+<td>27</td>
+<td>伊藤遥</td>
+<td>506</td>
+<td>4</td>
+<td>22,100.00</td>
+<td>4</td>
+<td>5</td>
+<td>4</td>
+<td>13</td>
+</tr>
+<tr>
+<th>4</th>
+<td>20</td>
+<td>前田浩</td>
+<td>530</td>
+<td>4</td>
+<td>21,560.00</td>
+<td>3</td>
+<td>5</td>
+<td>4</td>
+<td>12</td>
+</tr>
+<tr>
+<th>5</th>
+<td>6</td>
+<td>渡辺由美</td>
+<td>462</td>
+<td>3</td>
+<td>20,500.00</td>
+<td>5</td>
+<td>4</td>
+<td>3</td>
+<td>12</td>
+</tr>
+<tr>
+<th>6</th>
+<td>13</td>
+<td>松本健二</td>
+<td>680</td>
+<td>4</td>
+<td>43,400.00</td>
+<td>1</td>
+<td>5</td>
+<td>5</td>
+<td>11</td>
+</tr>
+<tr>
+<th>7</th>
+<td>17</td>
+<td>清水拓也</td>
+<td>540</td>
+<td>3</td>
+<td>23,800.00</td>
+<td>3</td>
+<td>4</td>
+<td>4</td>
+<td>11</td>
+</tr>
+<tr>
+<th>8</th>
+<td>21</td>
+<td>田中彩</td>
+<td>509</td>
+<td>3</td>
+<td>14,000.00</td>
+<td>3</td>
+<td>4</td>
+<td>3</td>
+<td>10</td>
+</tr>
+<tr>
+<th>9</th>
+<td>7</td>
+<td>伊藤拓也</td>
+<td>496</td>
+<td>3</td>
+<td>10,880.00</td>
+<td>4</td>
+<td>4</td>
+<td>2</td>
+<td>10</td>
+</tr>
+<tr>
+<th>10</th>
+<td>26</td>
+<td>渡辺直樹</td>
+<td>466</td>
+<td>2</td>
+<td>9,600.00</td>
+<td>5</td>
+<td>3</td>
+<td>2</td>
+<td>10</td>
+</tr>
+<tr>
+<th>11</th>
+<td>4</td>
+<td>山田大輔</td>
+<td>663</td>
+<td>3</td>
+<td>42,500.00</td>
+<td>1</td>
+<td>3</td>
+<td>5</td>
+<td>9</td>
+</tr>
+<tr>
+<th>12</th>
+<td>8</td>
+<td>中村和也</td>
+<td>662</td>
+<td>3</td>
+<td>21,960.00</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>9</td>
+</tr>
+<tr>
+<th>13</th>
+<td>24</td>
+<td>山田舞</td>
+<td>592</td>
+<td>3</td>
+<td>19,900.00</td>
+<td>2</td>
+<td>3</td>
+<td>3</td>
+<td>8</td>
+</tr>
+<tr>
+<th>14</th>
+<td>2</td>
+<td>鈴木一郎</td>
+<td>591</td>
+<td>3</td>
+<td>15,600.00</td>
+<td>2</td>
+<td>3</td>
+<td>3</td>
+<td>8</td>
+</tr>
+<tr>
+<th>15</th>
+<td>30</td>
+<td>加藤花子</td>
+<td>480</td>
+<td>2</td>
+<td>6,000.00</td>
+<td>4</td>
+<td>2</td>
+<td>2</td>
+<td>8</td>
+</tr>
+<tr>
+<th>16</th>
+<td>28</td>
+<td>中村和也</td>
+<td>472</td>
+<td>2</td>
+<td>5,500.00</td>
+<td>5</td>
+<td>2</td>
+<td>1</td>
+<td>8</td>
+</tr>
+<tr>
+<th>17</th>
+<td>25</td>
+<td>高橋翔太</td>
+<td>715</td>
+<td>2</td>
+<td>22,000.00</td>
+<td>1</td>
+<td>2</td>
+<td>4</td>
+<td>7</td>
+</tr>
+<tr>
+<th>18</th>
+<td>3</td>
+<td>佐藤美咲</td>
+<td>648</td>
+<td>2</td>
+<td>16,460.00</td>
+<td>2</td>
+<td>2</td>
+<td>3</td>
+<td>7</td>
+</tr>
+<tr>
+<th>19</th>
+<td>10</td>
+<td>加藤浩</td>
+<td>461</td>
+<td>1</td>
+<td>2,700.00</td>
+<td>5</td>
+<td>1</td>
+<td>1</td>
+<td>7</td>
+</tr>
+<tr>
+<th>20</th>
+<td>23</td>
+<td>佐藤健二</td>
+<td>504</td>
+<td>1</td>
+<td>4,400.00</td>
+<td>4</td>
+<td>1</td>
+<td>1</td>
+<td>6</td>
+</tr>
+<tr>
+<th>21</th>
+<td>19</td>
+<td>石川誠</td>
+<td>653</td>
+<td>1</td>
+<td>11,400.00</td>
+<td>2</td>
+<td>1</td>
+<td>2</td>
+<td>5</td>
+</tr>
+<tr>
+<th>22</th>
+<td>16</td>
+<td>林直樹</td>
+<td>663</td>
+<td>2</td>
+<td>6,600.00</td>
+<td>1</td>
+<td>2</td>
+<td>2</td>
+<td>5</td>
+</tr>
+<tr>
+<th>23</th>
+<td>15</td>
+<td>木村恵</td>
+<td>568</td>
+<td>1</td>
+<td>4,400.00</td>
+<td>3</td>
+<td>1</td>
+<td>1</td>
+<td>5</td>
+</tr>
+<tr>
+<th>24</th>
+<td>12</td>
+<td>山本真由</td>
+<td>811</td>
+<td>1</td>
+<td>4,500.00</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>3</td>
+</tr>
+<tr>
+<th>25</th>
+<td>18</td>
+<td>山口愛</td>
+<td>783</td>
+<td>1</td>
+<td>3,000.00</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=41b4ebcc">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="03.-RFM%E3%82%BB%E3%82%B0%E3%83%A1%E3%83%B3%E3%83%88%E5%88%86%E9%A1%9E">03. RFMセグメント分類<a class="anchor-link" href="#03.-RFM%E3%82%BB%E3%82%B0%E3%83%A1%E3%83%B3%E3%83%88%E5%88%86%E9%A1%9E">¶</a></h3><p><strong>ビジネス課題:</strong> スコアの組み合わせから「VIP」「休眠リスク」「離脱」等に自動分類する。</p>
+<p><strong>使用テクニック:</strong> CTE 3段, <code>CASE</code> 多分岐</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=75651126">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">sql</span> <span class="o">=</span> <span class="s1">'''</span>
+<span class="s1">WITH customer_rfm AS (</span>
+<span class="s1">    SELECT</span>
+<span class="s1">        o.customer_id,</span>
+<span class="s1">        DATEDIFF(CURDATE(), MAX(o.order_date))  AS recency,</span>
+<span class="s1">        COUNT(DISTINCT o.order_id)              AS frequency,</span>
+<span class="s1">        SUM(oi.quantity * oi.unit_price)         AS monetary</span>
+<span class="s1">    FROM orders o</span>
+<span class="s1">    JOIN order_items oi ON o.order_id = oi.order_id</span>
+<span class="s1">    WHERE o.status IN ('paid', 'shipped')</span>
+<span class="s1">    GROUP BY o.customer_id</span>
+<span class="s1">),</span>
+<span class="s1">scored AS (</span>
+<span class="s1">    SELECT</span>
+<span class="s1">        customer_id,</span>
+<span class="s1">        recency,</span>
+<span class="s1">        frequency,</span>
+<span class="s1">        monetary,</span>
+<span class="s1">        NTILE(5) OVER (ORDER BY recency DESC)   AS r_score,</span>
+<span class="s1">        NTILE(5) OVER (ORDER BY frequency ASC)  AS f_score,</span>
+<span class="s1">        NTILE(5) OVER (ORDER BY monetary ASC)   AS m_score</span>
+<span class="s1">    FROM customer_rfm</span>
+<span class="s1">),</span>
+<span class="s1">segmented AS (</span>
+<span class="s1">    SELECT</span>
+<span class="s1">        *,</span>
+<span class="s1">        r_score + f_score + m_score AS rfm_total,</span>
+<span class="s1">        CASE</span>
+<span class="s1">            -- VIP: 最近も買い、頻度も金額も高い</span>
+<span class="s1">            WHEN r_score &gt;= 4 AND f_score &gt;= 4 AND m_score &gt;= 4</span>
+<span class="s1">                THEN 'VIP'</span>
+<span class="s1">            -- 優良顧客: スコア合計が高い</span>
+<span class="s1">            WHEN r_score + f_score + m_score &gt;= 11</span>
+<span class="s1">                THEN '優良顧客'</span>
+<span class="s1">            -- 新規有望: 最近買ったが回数はまだ少ない</span>
+<span class="s1">            WHEN r_score &gt;= 4 AND f_score &lt;= 2</span>
+<span class="s1">                THEN '新規有望'</span>
+<span class="s1">            -- 休眠リスク: 以前は買っていたが最近来ていない</span>
+<span class="s1">            WHEN r_score &lt;= 2 AND f_score &gt;= 3</span>
+<span class="s1">                THEN '休眠リスク'</span>
+<span class="s1">            -- 離脱: 長期間購買なし &amp; 低頻度</span>
+<span class="s1">            WHEN r_score &lt;= 2 AND f_score &lt;= 2</span>
+<span class="s1">                THEN '離脱'</span>
+<span class="s1">            ELSE 'その他'</span>
+<span class="s1">        END AS segment</span>
+<span class="s1">    FROM scored</span>
+<span class="s1">)</span>
+<span class="s1">SELECT</span>
+<span class="s1">    seg.customer_id,</span>
+<span class="s1">    c.customer_name,</span>
+<span class="s1">    seg.r_score,</span>
+<span class="s1">    seg.f_score,</span>
+<span class="s1">    seg.m_score,</span>
+<span class="s1">    seg.rfm_total,</span>
+<span class="s1">    seg.segment</span>
+<span class="s1">FROM segmented seg</span>
+<span class="s1">JOIN customers c ON seg.customer_id = c.customer_id</span>
+<span class="s1">ORDER BY seg.rfm_total DESC, seg.monetary DESC;</span>
+<span class="s1">'''</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">run</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
+<pre>C:\Users\willi\AppData\Local\Temp\ipykernel_26396\2420247800.py:16: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  return pd.read_sql(sql, con)
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>customer_id</th>
+<th>customer_name</th>
+<th>r_score</th>
+<th>f_score</th>
+<th>m_score</th>
+<th>rfm_total</th>
+<th>segment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>29</td>
+<td>小林誠</td>
+<td>4</td>
+<td>5</td>
+<td>5</td>
+<td>14</td>
+<td>VIP</td>
+</tr>
+<tr>
+<th>1</th>
+<td>1</td>
+<td>田中太郎</td>
+<td>5</td>
+<td>4</td>
+<td>5</td>
+<td>14</td>
+<td>VIP</td>
+</tr>
+<tr>
+<th>2</th>
+<td>5</td>
+<td>高橋翔太</td>
+<td>3</td>
+<td>5</td>
+<td>5</td>
+<td>13</td>
+<td>優良顧客</td>
+</tr>
+<tr>
+<th>3</th>
+<td>27</td>
+<td>伊藤遥</td>
+<td>4</td>
+<td>5</td>
+<td>4</td>
+<td>13</td>
+<td>VIP</td>
+</tr>
+<tr>
+<th>4</th>
+<td>20</td>
+<td>前田浩</td>
+<td>3</td>
+<td>5</td>
+<td>4</td>
+<td>12</td>
+<td>優良顧客</td>
+</tr>
+<tr>
+<th>5</th>
+<td>6</td>
+<td>渡辺由美</td>
+<td>5</td>
+<td>4</td>
+<td>3</td>
+<td>12</td>
+<td>優良顧客</td>
+</tr>
+<tr>
+<th>6</th>
+<td>13</td>
+<td>松本健二</td>
+<td>1</td>
+<td>5</td>
+<td>5</td>
+<td>11</td>
+<td>優良顧客</td>
+</tr>
+<tr>
+<th>7</th>
+<td>17</td>
+<td>清水拓也</td>
+<td>3</td>
+<td>4</td>
+<td>4</td>
+<td>11</td>
+<td>優良顧客</td>
+</tr>
+<tr>
+<th>8</th>
+<td>21</td>
+<td>田中彩</td>
+<td>3</td>
+<td>4</td>
+<td>3</td>
+<td>10</td>
+<td>その他</td>
+</tr>
+<tr>
+<th>9</th>
+<td>7</td>
+<td>伊藤拓也</td>
+<td>4</td>
+<td>4</td>
+<td>2</td>
+<td>10</td>
+<td>その他</td>
+</tr>
+<tr>
+<th>10</th>
+<td>26</td>
+<td>渡辺直樹</td>
+<td>5</td>
+<td>3</td>
+<td>2</td>
+<td>10</td>
+<td>その他</td>
+</tr>
+<tr>
+<th>11</th>
+<td>4</td>
+<td>山田大輔</td>
+<td>1</td>
+<td>3</td>
+<td>5</td>
+<td>9</td>
+<td>休眠リスク</td>
+</tr>
+<tr>
+<th>12</th>
+<td>8</td>
+<td>中村和也</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>9</td>
+<td>休眠リスク</td>
+</tr>
+<tr>
+<th>13</th>
+<td>24</td>
+<td>山田舞</td>
+<td>2</td>
+<td>3</td>
+<td>3</td>
+<td>8</td>
+<td>休眠リスク</td>
+</tr>
+<tr>
+<th>14</th>
+<td>2</td>
+<td>鈴木一郎</td>
+<td>2</td>
+<td>3</td>
+<td>3</td>
+<td>8</td>
+<td>休眠リスク</td>
+</tr>
+<tr>
+<th>15</th>
+<td>30</td>
+<td>加藤花子</td>
+<td>4</td>
+<td>2</td>
+<td>2</td>
+<td>8</td>
+<td>新規有望</td>
+</tr>
+<tr>
+<th>16</th>
+<td>28</td>
+<td>中村和也</td>
+<td>5</td>
+<td>2</td>
+<td>1</td>
+<td>8</td>
+<td>新規有望</td>
+</tr>
+<tr>
+<th>17</th>
+<td>25</td>
+<td>高橋翔太</td>
+<td>1</td>
+<td>2</td>
+<td>4</td>
+<td>7</td>
+<td>離脱</td>
+</tr>
+<tr>
+<th>18</th>
+<td>3</td>
+<td>佐藤美咲</td>
+<td>2</td>
+<td>2</td>
+<td>3</td>
+<td>7</td>
+<td>離脱</td>
+</tr>
+<tr>
+<th>19</th>
+<td>10</td>
+<td>加藤浩</td>
+<td>5</td>
+<td>1</td>
+<td>1</td>
+<td>7</td>
+<td>新規有望</td>
+</tr>
+<tr>
+<th>20</th>
+<td>23</td>
+<td>佐藤健二</td>
+<td>4</td>
+<td>1</td>
+<td>1</td>
+<td>6</td>
+<td>新規有望</td>
+</tr>
+<tr>
+<th>21</th>
+<td>19</td>
+<td>石川誠</td>
+<td>2</td>
+<td>1</td>
+<td>2</td>
+<td>5</td>
+<td>離脱</td>
+</tr>
+<tr>
+<th>22</th>
+<td>16</td>
+<td>林直樹</td>
+<td>1</td>
+<td>2</td>
+<td>2</td>
+<td>5</td>
+<td>離脱</td>
+</tr>
+<tr>
+<th>23</th>
+<td>15</td>
+<td>木村恵</td>
+<td>3</td>
+<td>1</td>
+<td>1</td>
+<td>5</td>
+<td>その他</td>
+</tr>
+<tr>
+<th>24</th>
+<td>12</td>
+<td>山本真由</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>3</td>
+<td>離脱</td>
+</tr>
+<tr>
+<th>25</th>
+<td>18</td>
+<td>山口愛</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>3</td>
+<td>離脱</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=2c180147">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="04.-%E3%82%BB%E3%82%B0%E3%83%A1%E3%83%B3%E3%83%88%E5%88%A5%E9%9B%86%E8%A8%88%E3%83%AC%E3%83%9D%E3%83%BC%E3%83%88">04. セグメント別集計レポート<a class="anchor-link" href="#04.-%E3%82%BB%E3%82%B0%E3%83%A1%E3%83%B3%E3%83%88%E5%88%A5%E9%9B%86%E8%A8%88%E3%83%AC%E3%83%9D%E3%83%BC%E3%83%88">¶</a></h3><p><strong>ビジネス課題:</strong> セグメントごとの人数・平均LTV・平均購買間隔を集計する。</p>
+<p><strong>使用テクニック:</strong> <code>GROUP BY</code>, <code>AVG</code>, <code>NULLIF</code></p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=0e93c812">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">sql</span> <span class="o">=</span> <span class="s1">'''</span>
+<span class="s1">WITH customer_rfm AS (</span>
+<span class="s1">    SELECT</span>
+<span class="s1">        o.customer_id,</span>
+<span class="s1">        DATEDIFF(CURDATE(), MAX(o.order_date))  AS recency,</span>
+<span class="s1">        COUNT(DISTINCT o.order_id)              AS frequency,</span>
+<span class="s1">        SUM(oi.quantity * oi.unit_price)         AS monetary</span>
+<span class="s1">    FROM orders o</span>
+<span class="s1">    JOIN order_items oi ON o.order_id = oi.order_id</span>
+<span class="s1">    WHERE o.status IN ('paid', 'shipped')</span>
+<span class="s1">    GROUP BY o.customer_id</span>
+<span class="s1">),</span>
+<span class="s1">scored AS (</span>
+<span class="s1">    SELECT</span>
+<span class="s1">        customer_id, recency, frequency, monetary,</span>
+<span class="s1">        NTILE(5) OVER (ORDER BY recency DESC)   AS r_score,</span>
+<span class="s1">        NTILE(5) OVER (ORDER BY frequency ASC)  AS f_score,</span>
+<span class="s1">        NTILE(5) OVER (ORDER BY monetary ASC)   AS m_score</span>
+<span class="s1">    FROM customer_rfm</span>
+<span class="s1">),</span>
+<span class="s1">segmented AS (</span>
+<span class="s1">    SELECT</span>
+<span class="s1">        *,</span>
+<span class="s1">        CASE</span>
+<span class="s1">            WHEN r_score &gt;= 4 AND f_score &gt;= 4 AND m_score &gt;= 4 THEN 'VIP'</span>
+<span class="s1">            WHEN r_score + f_score + m_score &gt;= 11             THEN '優良顧客'</span>
+<span class="s1">            WHEN r_score &gt;= 4 AND f_score &lt;= 2                  THEN '新規有望'</span>
+<span class="s1">            WHEN r_score &lt;= 2 AND f_score &gt;= 3                  THEN '休眠リスク'</span>
+<span class="s1">            WHEN r_score &lt;= 2 AND f_score &lt;= 2                  THEN '離脱'</span>
+<span class="s1">            ELSE 'その他'</span>
+<span class="s1">        END AS segment</span>
+<span class="s1">    FROM scored</span>
+<span class="s1">)</span>
+<span class="s1">SELECT</span>
+<span class="s1">    segment,</span>
+<span class="s1">    COUNT(*)                              AS customer_count,</span>
+<span class="s1">    ROUND(AVG(monetary), 0)               AS avg_ltv,</span>
+<span class="s1">    ROUND(AVG(frequency), 1)              AS avg_frequency,</span>
+<span class="s1">    ROUND(AVG(recency), 0)                AS avg_recency_days,</span>
+<span class="s1">    ROUND(AVG(monetary / NULLIF(frequency, 0)), 0) AS avg_order_value</span>
+<span class="s1">FROM segmented</span>
+<span class="s1">GROUP BY segment</span>
+<span class="s1">ORDER BY avg_ltv DESC;</span>
+<span class="s1">'''</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">run</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
+<pre>C:\Users\willi\AppData\Local\Temp\ipykernel_26396\2420247800.py:16: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  return pd.read_sql(sql, con)
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>segment</th>
+<th>customer_count</th>
+<th>avg_ltv</th>
+<th>avg_frequency</th>
+<th>avg_recency_days</th>
+<th>avg_order_value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>VIP</td>
+<td>3</td>
+<td>46,500.00</td>
+<td>4.30</td>
+<td>489.00</td>
+<td>11,558.00</td>
+</tr>
+<tr>
+<th>1</th>
+<td>優良顧客</td>
+<td>5</td>
+<td>31,872.00</td>
+<td>3.80</td>
+<td>546.00</td>
+<td>8,205.00</td>
+</tr>
+<tr>
+<th>2</th>
+<td>休眠リスク</td>
+<td>4</td>
+<td>24,990.00</td>
+<td>3.00</td>
+<td>627.00</td>
+<td>8,330.00</td>
+</tr>
+<tr>
+<th>3</th>
+<td>離脱</td>
+<td>6</td>
+<td>10,660.00</td>
+<td>1.50</td>
+<td>712.00</td>
+<td>6,905.00</td>
+</tr>
+<tr>
+<th>4</th>
+<td>その他</td>
+<td>4</td>
+<td>9,720.00</td>
+<td>2.30</td>
+<td>510.00</td>
+<td>4,373.00</td>
+</tr>
+<tr>
+<th>5</th>
+<td>新規有望</td>
+<td>4</td>
+<td>4,650.00</td>
+<td>1.50</td>
+<td>479.00</td>
+<td>3,213.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=39af349b">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="05.-%E9%9B%A2%E8%84%B1%E3%83%AA%E3%82%B9%E3%82%AF%E9%A1%A7%E5%AE%A2%E4%B8%80%E8%A6%A7">05. 離脱リスク顧客一覧<a class="anchor-link" href="#05.-%E9%9B%A2%E8%84%B1%E3%83%AA%E3%82%B9%E3%82%AF%E9%A1%A7%E5%AE%A2%E4%B8%80%E8%A6%A7">¶</a></h3><p><strong>ビジネス課題:</strong> 最終購買から90日以上の顧客を抽出し、フォロー対象を特定する。</p>
+<p><strong>使用テクニック:</strong> <code>HAVING</code>, <code>DATEDIFF</code>, <code>CURDATE()</code></p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=de880b8c">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">sql</span> <span class="o">=</span> <span class="s1">'''</span>
+<span class="s1">WITH customer_activity AS (</span>
+<span class="s1">    SELECT</span>
+<span class="s1">        o.customer_id,</span>
+<span class="s1">        MAX(o.order_date)                       AS last_order_date,</span>
+<span class="s1">        DATEDIFF(CURDATE(), MAX(o.order_date))  AS days_since_last,</span>
+<span class="s1">        COUNT(DISTINCT o.order_id)              AS total_orders,</span>
+<span class="s1">        SUM(oi.quantity * oi.unit_price)         AS total_spent</span>
+<span class="s1">    FROM orders o</span>
+<span class="s1">    JOIN order_items oi ON o.order_id = oi.order_id</span>
+<span class="s1">    WHERE o.status IN ('paid', 'shipped')</span>
+<span class="s1">    GROUP BY o.customer_id</span>
+<span class="s1">    HAVING DATEDIFF(CURDATE(), MAX(o.order_date)) &gt;= 90</span>
+<span class="s1">)</span>
+<span class="s1">SELECT</span>
+<span class="s1">    c.customer_id,</span>
+<span class="s1">    c.customer_name,</span>
+<span class="s1">    c.email,</span>
+<span class="s1">    ca.last_order_date,</span>
+<span class="s1">    ca.days_since_last,</span>
+<span class="s1">    ca.total_orders,</span>
+<span class="s1">    ca.total_spent,</span>
+<span class="s1">    CASE</span>
+<span class="s1">        WHEN ca.total_spent &gt;= 30000 THEN '高LTV — 優先フォロー'</span>
+<span class="s1">        WHEN ca.total_orders &gt;= 3    THEN 'リピーター — 再活性化施策'</span>
+<span class="s1">        ELSE '一般 — 標準リマインド'</span>
+<span class="s1">    END AS follow_up_priority</span>
+<span class="s1">FROM customer_activity ca</span>
+<span class="s1">JOIN customers c ON ca.customer_id = c.customer_id</span>
+<span class="s1">ORDER BY ca.total_spent DESC;</span>
+<span class="s1">'''</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">run</span><span class="p">(</span><span class="n">sql</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
+<pre>C:\Users\willi\AppData\Local\Temp\ipykernel_26396\2420247800.py:16: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  return pd.read_sql(sql, con)
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>customer_id</th>
+<th>customer_name</th>
+<th>email</th>
+<th>last_order_date</th>
+<th>days_since_last</th>
+<th>total_orders</th>
+<th>total_spent</th>
+<th>follow_up_priority</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>29</td>
+<td>小林誠</td>
+<td>user29@example.com</td>
+<td>2024-11-23 22:09:00</td>
+<td>495</td>
+<td>6</td>
+<td>59,900.00</td>
+<td>高LTV — 優先フォロー</td>
+</tr>
+<tr>
+<th>1</th>
+<td>1</td>
+<td>田中太郎</td>
+<td>user01@example.com</td>
+<td>2024-12-22 11:25:00</td>
+<td>466</td>
+<td>3</td>
+<td>57,500.00</td>
+<td>高LTV — 優先フォロー</td>
+</tr>
+<tr>
+<th>2</th>
+<td>5</td>
+<td>高橋翔太</td>
+<td>user05@example.com</td>
+<td>2024-11-02 12:23:00</td>
+<td>516</td>
+<td>5</td>
+<td>50,100.00</td>
+<td>高LTV — 優先フォロー</td>
+</tr>
+<tr>
+<th>3</th>
+<td>13</td>
+<td>松本健二</td>
+<td>user13@example.com</td>
+<td>2024-05-22 18:23:00</td>
+<td>680</td>
+<td>4</td>
+<td>43,400.00</td>
+<td>高LTV — 優先フォロー</td>
+</tr>
+<tr>
+<th>4</th>
+<td>4</td>
+<td>山田大輔</td>
+<td>user04@example.com</td>
+<td>2024-06-08 11:04:00</td>
+<td>663</td>
+<td>3</td>
+<td>42,500.00</td>
+<td>高LTV — 優先フォロー</td>
+</tr>
+<tr>
+<th>5</th>
+<td>17</td>
+<td>清水拓也</td>
+<td>user17@example.com</td>
+<td>2024-10-09 10:59:00</td>
+<td>540</td>
+<td>3</td>
+<td>23,800.00</td>
+<td>リピーター — 再活性化施策</td>
+</tr>
+<tr>
+<th>6</th>
+<td>27</td>
+<td>伊藤遥</td>
+<td>user27@example.com</td>
+<td>2024-11-12 17:35:00</td>
+<td>506</td>
+<td>4</td>
+<td>22,100.00</td>
+<td>リピーター — 再活性化施策</td>
+</tr>
+<tr>
+<th>7</th>
+<td>25</td>
+<td>高橋翔太</td>
+<td>user25@example.com</td>
+<td>2024-04-17 22:00:00</td>
+<td>715</td>
+<td>2</td>
+<td>22,000.00</td>
+<td>一般 — 標準リマインド</td>
+</tr>
+<tr>
+<th>8</th>
+<td>8</td>
+<td>中村和也</td>
+<td>user08@example.com</td>
+<td>2024-06-09 18:31:00</td>
+<td>662</td>
+<td>3</td>
+<td>21,960.00</td>
+<td>リピーター — 再活性化施策</td>
+</tr>
+<tr>
+<th>9</th>
+<td>20</td>
+<td>前田浩</td>
+<td>user20@example.com</td>
+<td>2024-10-19 09:04:00</td>
+<td>530</td>
+<td>4</td>
+<td>21,560.00</td>
+<td>リピーター — 再活性化施策</td>
+</tr>
+<tr>
+<th>10</th>
+<td>6</td>
+<td>渡辺由美</td>
+<td>user06@example.com</td>
+<td>2024-12-26 19:06:00</td>
+<td>462</td>
+<td>3</td>
+<td>20,500.00</td>
+<td>リピーター — 再活性化施策</td>
+</tr>
+<tr>
+<th>11</th>
+<td>24</td>
+<td>山田舞</td>
+<td>user24@example.com</td>
+<td>2024-08-18 08:47:00</td>
+<td>592</td>
+<td>3</td>
+<td>19,900.00</td>
+<td>リピーター — 再活性化施策</td>
+</tr>
+<tr>
+<th>12</th>
+<td>3</td>
+<td>佐藤美咲</td>
+<td>user03@example.com</td>
+<td>2024-06-23 18:03:00</td>
+<td>648</td>
+<td>2</td>
+<td>16,460.00</td>
+<td>一般 — 標準リマインド</td>
+</tr>
+<tr>
+<th>13</th>
+<td>2</td>
+<td>鈴木一郎</td>
+<td>user02@example.com</td>
+<td>2024-08-19 15:32:00</td>
+<td>591</td>
+<td>3</td>
+<td>15,600.00</td>
+<td>リピーター — 再活性化施策</td>
+</tr>
+<tr>
+<th>14</th>
+<td>21</td>
+<td>田中彩</td>
+<td>user21@example.com</td>
+<td>2024-11-09 10:47:00</td>
+<td>509</td>
+<td>3</td>
+<td>14,000.00</td>
+<td>リピーター — 再活性化施策</td>
+</tr>
+<tr>
+<th>15</th>
+<td>19</td>
+<td>石川誠</td>
+<td>user19@example.com</td>
+<td>2024-06-18 11:37:00</td>
+<td>653</td>
+<td>1</td>
+<td>11,400.00</td>
+<td>一般 — 標準リマインド</td>
+</tr>
+<tr>
+<th>16</th>
+<td>7</td>
+<td>伊藤拓也</td>
+<td>user07@example.com</td>
+<td>2024-11-22 11:42:00</td>
+<td>496</td>
+<td>3</td>
+<td>10,880.00</td>
+<td>リピーター — 再活性化施策</td>
+</tr>
+<tr>
+<th>17</th>
+<td>26</td>
+<td>渡辺直樹</td>
+<td>user26@example.com</td>
+<td>2024-12-22 21:47:00</td>
+<td>466</td>
+<td>2</td>
+<td>9,600.00</td>
+<td>一般 — 標準リマインド</td>
+</tr>
+<tr>
+<th>18</th>
+<td>16</td>
+<td>林直樹</td>
+<td>user16@example.com</td>
+<td>2024-06-08 20:30:00</td>
+<td>663</td>
+<td>2</td>
+<td>6,600.00</td>
+<td>一般 — 標準リマインド</td>
+</tr>
+<tr>
+<th>19</th>
+<td>30</td>
+<td>加藤花子</td>
+<td>user30@example.com</td>
+<td>2024-12-08 21:10:00</td>
+<td>480</td>
+<td>2</td>
+<td>6,000.00</td>
+<td>一般 — 標準リマインド</td>
+</tr>
+<tr>
+<th>20</th>
+<td>28</td>
+<td>中村和也</td>
+<td>user28@example.com</td>
+<td>2024-12-16 11:12:00</td>
+<td>472</td>
+<td>2</td>
+<td>5,500.00</td>
+<td>一般 — 標準リマインド</td>
+</tr>
+<tr>
+<th>21</th>
+<td>12</td>
+<td>山本真由</td>
+<td>user12@example.com</td>
+<td>2024-01-12 11:42:00</td>
+<td>811</td>
+<td>1</td>
+<td>4,500.00</td>
+<td>一般 — 標準リマインド</td>
+</tr>
+<tr>
+<th>22</th>
+<td>15</td>
+<td>木村恵</td>
+<td>user15@example.com</td>
+<td>2024-09-11 22:48:00</td>
+<td>568</td>
+<td>1</td>
+<td>4,400.00</td>
+<td>一般 — 標準リマインド</td>
+</tr>
+<tr>
+<th>23</th>
+<td>23</td>
+<td>佐藤健二</td>
+<td>user23@example.com</td>
+<td>2024-11-14 16:00:00</td>
+<td>504</td>
+<td>1</td>
+<td>4,400.00</td>
+<td>一般 — 標準リマインド</td>
+</tr>
+<tr>
+<th>24</th>
+<td>18</td>
+<td>山口愛</td>
+<td>user18@example.com</td>
+<td>2024-02-09 19:37:00</td>
+<td>783</td>
+<td>1</td>
+<td>3,000.00</td>
+<td>一般 — 標準リマインド</td>
+</tr>
+<tr>
+<th>25</th>
+<td>10</td>
+<td>加藤浩</td>
+<td>user10@example.com</td>
+<td>2024-12-27 20:55:00</td>
+<td>461</td>
+<td>1</td>
+<td>2,700.00</td>
+<td>一般 — 標準リマインド</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a405853b">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <hr/>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=7c8696e9">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=cf104b18">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">con</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'接続を閉じました。'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>接続を閉じました。
 </pre>
